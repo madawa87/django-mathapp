@@ -1,0 +1,171 @@
+#match-game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: rgb(155, 128, 128);
+
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    justify-content: space-around;
+}
+
+.mg-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+
+.mg-box {
+    display: flex;
+    margin: 10px;
+    min-width: 70px;
+    min-height: 70px;
+    border: 4px solid #920534;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+
+
+
+.mg-box:hover {
+    background-color: aqua;
+    border: 2px dashed red;
+    border-radius: 4px;
+}
+
+
+#submit {
+    background-color: #36d9b6;
+    border-radius: 0;
+    border: 0;
+    color: #fff;
+}
+
+.task-wrapper {
+    margin: 5px;
+    padding: 5px;
+    padding: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #e9e9e9;
+    color: #686868;
+}
+
+.eqn-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+    grid-gap: 8px;
+    /* align-items: center; */
+}
+
+.eqn-child {
+    min-height: 100px;
+    background: rgb(171, 245, 245);
+    line-height: 100px;
+    text-align: center;
+    /* align-items: center; */
+    /* border: 1px dashed red !important; */
+    font-weight: 600;
+    font-size: 32px;
+    border-radius: 15px;
+
+}
+
+.input-div {
+
+    display: flex;
+    justify-content: center;
+    /* justify-items: center; */
+    align-items: center;
+    font-size: 1em;
+    /* border: 1px solid yellow; */
+}
+
+.input-wrapper-div {
+    /* this div just wraps input. otherwise centering input element does not work */
+    /* border: 1px darkred dashed; */
+    background-color: #fff;
+}
+
+input[type='text'] {
+    /* background-color: rgb(171, 245, 245); */
+    background-color: #fff;
+}
+
+.app_flex_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* https://stackoverflow.com/questions/45536537/centering-in-css-grid */
+/* https://www.youtube.com/watch?v=W9BjUoot2Eo */
+
+/* ###################################### */
+/* timer */
+/* https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ */
+
+.base-timer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.base-timer__svg {
+    transform: scaleX(-1);
+}
+
+.base-timer__circle {
+    fill: none;
+    stroke: none;
+}
+
+.base-timer__path-elapsed {
+    stroke-width: 10px;
+    stroke: grey;
+}
+
+.base-timer__path-remaining {
+    stroke-width: 9px;
+    stroke-linecap: round;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: 1s linear all;
+    fill-rule: nonzero;
+    stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+    color: rgb(4, 255, 142);
+}
+
+.base-timer__path-remaining.yellow {
+    color: rgb(227, 252, 0);
+}
+
+.base-timer__path-remaining.orange {
+    color: orange;
+}
+
+.base-timer__path-remaining.red {
+    color: red;
+}
+
+.base-timer__label {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }

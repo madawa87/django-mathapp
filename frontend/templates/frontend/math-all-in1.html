@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div id ="section-container">
+        <div id="nav-bar">
+            <div class="nav-bar-item">
+                <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'images/pb4-1.png' %}" class="pbimgs"></span>
+                <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'images/pb4-2.png' %}" class="pbimgs"></span>
+                <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'images/pb4-3.png' %}" class="pbimgs"></span>
+                <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'images/pb4-4.png' %}" class="pbimgs"></span>
+            </div>
+            <div class="nav-bar-item">
+                {% if user.is_authenticated %}
+                    Hello, <a href="{% url 'login' %}">{{ user }}</a>
+                    {{ user.id|json_script:"user_id" }}
+                {% else %}
+                    Login
+                {% endif %}
+            </div>
+
+        </div>
+        
+    </div>
+    
+</div>
+
+<div class="container">
+    <div id="section-container">
+        <!-- <div class="d-flex p-2 bd-highlight justify-content-center">Type the answer to this math equation</div> -->
+
+        <div id="form-wrapper">
+            <form id="form">
+                <div class="eqn-layout">
+                    <div class="eqn-child">
+                        {% csrf_token %}
+                        <label id="math-eqn"> </label>
+                        <input id="correct-answer" type="hidden">
+                    </div>
+                    <div class="eqn-child input-div">
+                        <div class="input-wrapper-div">
+                            <input id="answer" class="form-control form-control-lg" type="text" name="answer"
+                                placeholder="Answer">
+                        </div>
+                    </div>
+                    <!-- <div class="eqn-child">
+                        {% csrf_token %}
+                        <input id="submit" class="btn" type="submit" value="Check Answer">
+                    </div> -->
+                </div>
+            </form>
+        </div>
+        <div id="list-wrapper">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div id="section-container">
+        <div id="form-wrapper">
+            <div id="app" class="app_flex_box"></div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block page-spec-js %}
+<script type="text/javascript" src="{% static 'js/math.js' %}"></script>
+{% endblock %}

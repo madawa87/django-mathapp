@@ -1,0 +1,49 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/math.css' %}">
+{% endblock %}
+
+{% block main-app %}
+<!-- <div id="main-container" class="container1"> -->
+<div id="container">
+    <div class="section-container">
+        <!-- <div class="d-flex p-2 bd-highlight justify-content-center">Type the answer to this math equation</div> -->
+
+        <div>
+            <form id="form">
+                <div class="eqn-layout">
+                    <div class="eqn-child">
+                        {% csrf_token %}
+                        <label id="math-eqn"> </label>
+                        <input id="correct-answer" type="hidden">
+                    </div>
+                    <div class="eqn-child input-div">
+                        <div class="input-wrapper-div">
+                            <input id="answer" class="form-control form-control-lg" type="text" name="answer"
+                                placeholder="Answer">
+                        </div>
+                    </div>
+                    <!-- <div class="eqn-child">
+                        {% csrf_token %}
+                        <input id="submit" class="btn" type="submit" value="Check Answer">
+                    </div> -->
+                </div>
+            </form>
+        </div>
+
+        <div id="form-wrapper0">
+            <div id="app" class="app_flex_box"></div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<script type="text/javascript" src="{% static 'js/math.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/match.css' %}">
+{% endblock %}
+
+
+
+{% block main-app %}
+
+<!-- <div id="main-container" class="container1"> -->
+<div id="container">
+    <div class="section-container">
+        <div id="match-app">
+
+        <!-- <div class="mg-row">
+            <div class="mg-box">33</div>
+            <div class="mg-box">33</div>
+            <div class="mg-box">33</div>
+            <div class="mg-box">33</div>
+        </div>
+        <div class="mg-row">
+            <div class="mg-box">33</div>
+            <div class="mg-box">23</div>
+            <div class="mg-box">43</div>
+            <div class="mg-box">553</div>
+        </div> -->
+        
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<script type="text/javascript" src="{% static 'js/match.js' %}"></script>
+{% endblock %}

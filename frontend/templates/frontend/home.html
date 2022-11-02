@@ -1,0 +1,25 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block main-app %}
+
+<!-- <div id="main-container" class="container1"> -->
+<div id="container">
+    <div class="section-container">
+        <!-- <div class="d-flex p-2 bd-highlight justify-content-center">Type the answer to this math equation</div> -->
+
+        <div id="form-wrapper">
+            Heres some stats
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<script type="text/javascript" src="{% static 'js/math.js' %}"></script>
+{% endblock %}
