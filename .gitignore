@@ -1,0 +1,8 @@
+secrets/
+kidsm_env/
+load_env
+run-math
+kidsm/__pycache__/
+frontend/__pycache__/
+mathapi/__pycache__/
+

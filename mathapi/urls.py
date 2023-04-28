@@ -15,6 +15,7 @@ urlpatterns = [
     path('questions/<int:pk>/checkAnswer/', views.checkAnswer, name='api-checkAnswer'),
     path('users/<int:pk>/updateCoins/', views.updateCoins, name='api-updateCoins'),
     path('users/<int:pk>/updatePokeballs/', views.updatePokeballs, name='api-updatePokeballs'),
+    path('users/<int:pk>/updateInventory/', views.updateInventory, name='api-updateInventory'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

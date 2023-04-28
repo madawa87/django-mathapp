@@ -7,13 +7,14 @@ from django.http import HttpResponse, JsonResponse
 
 from rest_framework import generics
 from rest_framework.decorators import api_view
+from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import permissions, status
-from mathapi import serializers
 
+from mathapi import serializers
 from mathapi.serializers import QuestionSerializer, StatSerializer
-from mathapi.models import Coins, Pokeballs, Question, Stats
+from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory, Question, Stats
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -56,6 +57,7 @@ class StatList(generics.ListAPIView):
     serializer_class = StatSerializer
 
 class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
@@ -66,7 +68,8 @@ def default_view(request):
 @api_view(['GET'])
 def randomQuestion(request):
     random.seed()
-    question = random.choice(list(Question.objects.all()))
+    question_list = list(Question.objects.all())
+    question = random.choice(question_list)
     serializer = QuestionSerializer(question, many=False)
     return JsonResponse(serializer.data)
     
@@ -112,7 +115,8 @@ def checkAnswer(request, pk):
 @api_view(['POST'])
 def updateCoins(request, pk):
     """
-    update user coins"""
+    update user coins
+    """
 
     print("+++ in updateCoins")
     coins_obj = Coins.objects.get(user=request.user)
@@ -143,11 +147,12 @@ def updatePokeballs(request, pk):
     """
     print ("updating pokeballs")
     pb_obj = Pokeballs.objects.get(user=request.user)
+    lt_pb_obj = LifetimePokeballs.objects.get(user=request.user)
     request_data = request.data
 
     response = {"updated": True}
 
-    if pb_obj:
+    if pb_obj and lt_pb_obj:
         if request_data["inc"]:
             tier = ceil(request_data["timeLeft"]/5)
             print ("timeleft: {}, tier: {}".format(request_data['timeLeft'], tier))
@@ -155,15 +160,23 @@ def updatePokeballs(request, pk):
             pb_obj.tier3 = pb_obj.tier3 + 1
             pb_obj.tier2 = pb_obj.tier2 + 1
             pb_obj.tier1 = pb_obj.tier1 + 1
+            lt_pb_obj.tier4 = lt_pb_obj.tier4 + 1
+            lt_pb_obj.tier3 = lt_pb_obj.tier3 + 1
+            lt_pb_obj.tier2 = lt_pb_obj.tier2 + 1
+            lt_pb_obj.tier1 = lt_pb_obj.tier1 + 1
             if request_data["timeLeft"] < 19:
                 if tier != 4:
                     pb_obj.tier4 = pb_obj.tier4 - 1
+                    lt_pb_obj.tier4 = lt_pb_obj.tier4 - 1
                 if tier != 3:
                     pb_obj.tier3 = pb_obj.tier3 - 1
+                    lt_pb_obj.tier3 = lt_pb_obj.tier3 - 1
                 if tier != 2:
                     pb_obj.tier2 = pb_obj.tier2 - 1
+                    lt_pb_obj.tier2 = lt_pb_obj.tier2 - 1
                 if tier != 1:
                     pb_obj.tier1 = pb_obj.tier1 - 1
+                    lt_pb_obj.tier1 = lt_pb_obj.tier1 - 1
         else:
             # decreasing
             if pb_obj.tier1 > 0:
@@ -178,14 +191,95 @@ def updatePokeballs(request, pk):
                 response["updated"] = False
 
         if response["updated"]:
-            print("++ Updating pokeballs")
+            print("++ Updating pokeballs and lifetime pokeballs")
             pb_obj.save()
+            lt_pb_obj.save()
             response['pb1'] = pb_obj.tier1
             response['pb2'] = pb_obj.tier2
             response['pb3'] = pb_obj.tier3
             response['pb4'] = pb_obj.tier4
+            response['lt_pb1'] = lt_pb_obj.tier1
+            response['lt_pb2'] = lt_pb_obj.tier2
+            response['lt_pb3'] = lt_pb_obj.tier3
+            response['lt_pb4'] = lt_pb_obj.tier4
     else:
         print("NO pokeball object")
+        response["updated"] = False
+
+    print("response: {}".format(response))
+    return JsonResponse(response)
+
+
+@api_view(['POST'])
+def updateInventory(request, pk):
+    """
+    Update user Inventory
+    """
+    print ("+++++++updating inventory")
+    inventory_obj = Inventory.objects.get(user=request.user)
+    lt_inventory_obj = LifetimeInventory.objects.get(user=request.user)
+    request_data = request.data
+
+    response = {"updated": True}
+
+    if inventory_obj and lt_inventory_obj:
+        if request_data["inc"]:
+            tier = ceil(request_data["timeLeft"]/5)
+            print ("timeleft: {}, tier: {}".format(request_data['timeLeft'], tier))
+            inventory_obj.tier4 = inventory_obj.tier4 + 1
+            inventory_obj.tier3 = inventory_obj.tier3 + 1
+            inventory_obj.tier2 = inventory_obj.tier2 + 1
+            inventory_obj.tier1 = inventory_obj.tier1 + 1
+            lt_inventory_obj.tier4 = lt_inventory_obj.tier4 + 1
+            lt_inventory_obj.tier3 = lt_inventory_obj.tier3 + 1
+            lt_inventory_obj.tier2 = lt_inventory_obj.tier2 + 1
+            lt_inventory_obj.tier1 = lt_inventory_obj.tier1 + 1
+            if request_data["timeLeft"] < 19:
+                if tier != 4:
+                    inventory_obj.tier4 = inventory_obj.tier4 - 1
+                    lt_inventory_obj.tier4 = lt_inventory_obj.tier4 - 1
+                if tier != 3:
+                    inventory_obj.tier3 = inventory_obj.tier3 - 1
+                    lt_inventory_obj.tier3 = lt_inventory_obj.tier3 - 1
+                if tier != 2:
+                    inventory_obj.tier2 = inventory_obj.tier2 - 1
+                    lt_inventory_obj.tier2 = lt_inventory_obj.tier2 - 1
+                if tier != 1:
+                    inventory_obj.tier1 = inventory_obj.tier1 - 1
+                    lt_inventory_obj.tier1 = lt_inventory_obj.tier1 - 1
+            # pass has to be increased no matter what depending of the val in request data, since it sends 0 
+            # in no update is needed
+            inventory_obj.passes = inventory_obj.passes + request_data["inc_pass"]
+            lt_inventory_obj.passes = lt_inventory_obj.passes + request_data["inc_pass"]
+        else:
+            # decreasing
+            if inventory_obj.tier1 > 0:
+                inventory_obj.tier1 = inventory_obj.tier1 - 1
+            elif inventory_obj.tier2 > 0:
+                inventory_obj.tier2 = inventory_obj.tier2 - 1
+            elif inventory_obj.tier3 > 0:
+                inventory_obj.tier3 = inventory_obj.tier3 - 1
+            elif inventory_obj.tier4 > 0:
+                inventory_obj.tier4 = inventory_obj.tier4 - 1
+            else:
+                response["updated"] = False
+
+        if response["updated"]:
+            print("++ Updating inventory and lifetime inventory")
+            inventory_obj.save()
+            lt_inventory_obj.save()
+            response['pb1'] = inventory_obj.tier1
+            response['pb2'] = inventory_obj.tier2
+            response['pb3'] = inventory_obj.tier3
+            response['pb4'] = inventory_obj.tier4
+            response['passes'] = inventory_obj.passes
+            response['lt_pb1'] = lt_inventory_obj.tier1
+            response['lt_pb2'] = lt_inventory_obj.tier2
+            response['lt_pb3'] = lt_inventory_obj.tier3
+            response['lt_pb4'] = lt_inventory_obj.tier4
+            response['lt_passes'] = lt_inventory_obj.passes
+    else:
+        print("NO inventory object")
         response["updated"] = False
 
     print("response: {}".format(response))
