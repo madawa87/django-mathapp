@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m$sf%*(a%=suk(*^nf2j=nt!jp9houdds!kj=$&=^pud_gs!p='
+def load_json(file_path):
+    with open(file_path, 'r', encoding='utf-8') as jfile:
+        return json.load(jfile)
+secrets = load_json('secrets/secrets.json')
+SECRET_KEY = secrets['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -73,6 +78,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kidsm.wsgi.application'
 
+# with this authentications setup, curl commands can not make api calls
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#     ],
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
