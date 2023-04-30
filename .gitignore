@@ -5,4 +5,4 @@ run-math
 kidsm/__pycache__/
 frontend/__pycache__/
 mathapi/__pycache__/
-
+db.sqlite3

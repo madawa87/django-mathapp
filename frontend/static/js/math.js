@@ -25,6 +25,17 @@ let ans = document.getElementById('correct-answer');
 let input_answer = document.getElementById('answer');
 let q_id = 0
 
+// streak values
+let dive_streak = 0;
+let ultra_streak = 0;
+let master_streak = 0;
+
+function clearStreaks() {
+    dive_streak = 0;
+    ultra_streak = 0;
+    master_streak = 0;
+}
+
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -51,7 +62,7 @@ function generateEquation() {
     console.log("ans = " + answer);
 }
 
-function populateEquation() {
+function populateEquationDB() {
     let url = 'http://127.0.0.1:8000/api/randomQuestion/';
     fetch(url)
         .then((resp) => resp.json())
@@ -68,7 +79,7 @@ function populateEquation() {
 }
 
 
-populateEquation();
+populateEquationDB();
 // focus on answer input
 input_answer.focus();
 
@@ -101,6 +112,32 @@ let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 let remainingPathColor = TIME_COLOR_CODES.l1.color;
+
+function reset_timer(){
+    document.getElementById("app").innerHTML = `
+    <div class="base-timer">
+    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g class="base-timer__circle">
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+        <path
+            id="base-timer-path-remaining"
+            stroke-dasharray="283"
+            class="base-timer__path-remaining ${remainingPathColor}"
+            d="
+            M 50, 50
+            m -45, 0
+            a 45,45 0 1,0 90,0
+            a 45,45 0 1,0 -90,0
+            "
+        ></path>
+        </g>
+    </svg>
+    <span id="base-timer-label" class="base-timer__label">${formatTime(
+        timeLeft
+    )}</span>
+    </div>
+    `;
+}
 
 document.getElementById("app").innerHTML = `
 <div class="base-timer">
@@ -296,7 +333,91 @@ function updatePballs(inc) {
 }
 
 
+function updateInventory(inc_bool, pass_inc) {
+    console.log("updating inventory..");
+
+    // using new built in template tags in Django defined user_id in math.html template
+    const uid = JSON.parse(document.getElementById('user_id').textContent);
+    let url = `http://127.0.0.1:8000/api/users/${uid}/updateInventory/`
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'x-CSRFToken' : csrftoken
+        },
+        body: JSON.stringify({
+            inc: inc_bool,
+            inc_pass: pass_inc,
+            timeLeft: timeLeft
+        })
+    }).then(res => {
+        console.log("res : " + res)
+        return res.json()
+    }).then((data) => {
+        if (data['updated']) {
+            document.getElementById("pk-b1").innerText = data['pb1'];
+            document.getElementById("pk-b2").innerText = data['pb2'];
+            document.getElementById("pk-b3").innerText = data['pb3'];
+            document.getElementById("pk-b4").innerText = data['pb4'];
+            document.getElementById("passes-span-lf").innerText = data['lt_passes'];
+            // console.log("new coins = " + data['coins']);
+        }
+    })
+}
+
+
+
 let submit_button = document.getElementById('submit');
+
+let db_streak_span = document.getElementById('db-streak');
+let ub_streak_span = document.getElementById('ub-streak');
+let mb_streak_span = document.getElementById('mb-streak');
+let passes_span = document.getElementById('passes-span');
+
+function updateStreak(is_correct) {
+    pass_inc = 0;
+    if (is_correct && timeLeft > 5) {
+        dive_streak ++;
+        if (timeLeft > 10) {
+            ultra_streak ++;
+        } else {
+            ultra_streak = 0;
+        }
+        if (timeLeft > 15) {
+            master_streak ++;
+        } else {
+            master_streak = 0;
+        }
+    }
+    else {
+        dive_streak = 0;
+        ultra_streak = 0;
+        master_streak = 0;
+    }
+
+    if (dive_streak >= 10) {
+        passes_span.innerText = parseInt(passes_span.innerText) + 1;
+        dive_streak = 0;
+        pass_inc++;
+    }
+    if (ultra_streak >= 5) {
+        passes_span.innerText = parseInt(passes_span.innerText) + 1;
+        ultra_streak = 0;
+        pass_inc++;
+    }
+    if (master_streak >= 3) {
+        passes_span.innerText = parseInt(passes_span.innerText) + 1;
+        master_streak = 0;
+        pass_inc++;
+    }
+
+    db_streak_span.innerText = dive_streak;
+    ub_streak_span.innerText = ultra_streak;
+    mb_streak_span.innerText = master_streak;
+    return pass_inc;
+}
+
 
 input_answer.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
@@ -307,14 +428,31 @@ input_answer.addEventListener('keypress', function (event) {
 
         if (input_answer.value === ans.innerText) {
             console.log("correct!!!");
-            updatePballs(true);
+            // update streaks
+            pass_inc = updateStreak(true);
+            
+            // updatePballs(true);
+            updateInventory(true, pass_inc);
             alert(input_answer.value + " is the correct answer.");
-            window.location.href = window.location.href;
 
+            // reload current page
+            // window.location.href = window.location.href;
+
+            // populate equation instead of reloading current page
+            populateEquationDB();
+
+            clearInterval(timerInterval);
+            timePassed = 0;
+            timeLeft = TIME_LIMIT - timePassed;
+            setRemainingPathColor();
+            reset_timer();
+            startTimer();
         }
         else {
             console.log("wrong answer!!!");
-            updatePballs(false);
+            // updatePballs(false);
+            pass_inc = updateStreak(false);
+            updateInventory(false, pass_inc);
             alert(input_answer.value + " is not the correct answer.");
             input_answer.value = ''
         }

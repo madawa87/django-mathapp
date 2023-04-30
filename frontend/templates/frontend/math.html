@@ -35,8 +35,19 @@
             </form>
         </div>
 
-        <div id="form-wrapper0">
+        <!-- <div id="form-wrapper0"> -->
             <div id="app" class="app_flex_box"></div>
+        <!-- </div> -->
+        
+        <div class="steak-bar">
+            <div class="steak-bar-item">streak: 
+                <img src="{% static 'images/pb4-2.png' %}" class="pbimgs">: <span id="db-streak">0</span>, 
+                <img src="{% static 'images/pb4-3.png' %}" class="pbimgs">: <span id="ub-streak">0</span>, 
+                <img src="{% static 'images/pb4-4.png' %}" class="pbimgs">: <span id="mb-streak">0</span></div>
+        </div>
+        <div class="steak-bar">
+            <!-- <div class="steak-bar-item">passes: <span id="passes-span">0</span></div> -->
+            <div class="steak-bar-item">passes: <span id="passes-span">0</span> ---- lf passes = <span id="passes-span-lf">{{ passes }}</span></div>
         </div>
     </div>
 

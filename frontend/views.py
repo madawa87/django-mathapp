@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from mathapi.models import Coins, Pokeballs
+from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory
 
 
 def get_common_context(user):
@@ -13,17 +13,47 @@ def get_common_context(user):
         'tier2': 0,
         'tier1': 1
         })
+    user_lifetime_PB_obj, lf_created = LifetimePokeballs.objects.get_or_create(user=user, defaults={
+        'tier4': 0,
+        'tier3': 0,
+        'tier2': 0,
+        'tier1': 1
+        })
+    user_inventory_obj, lf_created = Inventory.objects.get_or_create(user=user, defaults={
+        'tier4': 0,
+        'tier3': 0,
+        'tier2': 0,
+        'tier1': 1,
+        'passes': 0
+        })
+
+    user_lifetime_inventory_obj, lf_created = LifetimeInventory.objects.get_or_create(user=user, defaults={
+        'tier4': 0,
+        'tier3': 0,
+        'tier2': 0,
+        'tier1': 1,
+        'passes': 0
+        })
+        
     print ("created: {}".format(created))
+    print ("lifetime created: {}".format(lf_created))
     context = {
         'user' : user,
-        'pb1' : userPB_obj.tier1,
-        'pb2' : userPB_obj.tier2,
-        'pb3' : userPB_obj.tier3,
-        'pb4' : userPB_obj.tier4,
+        'pb1' : user_inventory_obj.tier1,
+        'pb2' : user_inventory_obj.tier2,
+        'pb3' : user_inventory_obj.tier3,
+        'pb4' : user_inventory_obj.tier4,
+        'passes' : user_inventory_obj.passes,
+        'lf_pb1' : user_lifetime_inventory_obj.tier1,
+        'lf_pb2' : user_lifetime_inventory_obj.tier2,
+        'lf_pb3' : user_lifetime_inventory_obj.tier3,
+        'lf_pb4' : user_lifetime_inventory_obj.tier4,
+        'passes' : user_lifetime_inventory_obj.passes,
     }
-    
+
     print ("Common context: {}".format(context))
     return context
+
 
 # Create your views here.
 @login_required
