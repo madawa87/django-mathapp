@@ -36,19 +36,18 @@ function clearStreaks() {
     master_streak = 0;
 }
 
-
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-function generateEquation() {
+function populateEquationJS() {
     console.log("generating eqn in JS");
     
     op_arr = ['+', '-']
     let operator = op_arr[~~(Math.random() * op_arr.length)];
     console.log("operator = " + operator);
-    const op1 = getRandomInt(50);
-    const op2 = getRandomInt(50);
+    const op1 = getRandomInt(150);
+    const op2 = getRandomInt(99);
     console.log("op1 = " + op1);
     console.log("op2 = " + op2);
     
@@ -60,6 +59,8 @@ function generateEquation() {
         answer = op1 - op2;
     }
     console.log("ans = " + answer);
+    equn.innerText = '' + op1 + ' ' + operator + ' ' + op2 + ' =';
+    ans.innerText = answer;
 }
 
 function populateEquationDB() {
@@ -112,6 +113,7 @@ let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 let remainingPathColor = TIME_COLOR_CODES.l1.color;
+
 
 function reset_timer(){
     document.getElementById("app").innerHTML = `
@@ -173,6 +175,9 @@ function startTimer() {
     timerInterval = setInterval(() => {
         timePassed = timePassed += 1;
         timeLeft = TIME_LIMIT - timePassed;
+        if (timeLeft < 0) {
+            timeLeft = 0
+        }
         document.getElementById("base-timer-label").innerHTML = formatTime(
             timeLeft
         );
@@ -228,15 +233,18 @@ function calculateTimeFraction() {
     return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
 }
 
+
 function setCircleDasharray() {
     const circleDasharray = `${(
         calculateTimeFraction() * FULL_DASH_ARRAY
     ).toFixed(0)} 283`;
+    // Length = 2πr = 2 * π * 45 = 282,6
 
     document
         .getElementById("base-timer-path-remaining")
         .setAttribute("stroke-dasharray", circleDasharray);
 }
+
 
 function checkAnswer() {
     console.log("checking...")
@@ -367,7 +375,6 @@ function updateInventory(inc_bool, pass_inc) {
 }
 
 
-
 let submit_button = document.getElementById('submit');
 
 let db_streak_span = document.getElementById('db-streak');
@@ -417,7 +424,6 @@ function updateStreak(is_correct) {
     mb_streak_span.innerText = master_streak;
     return pass_inc;
 }
-
 
 input_answer.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
