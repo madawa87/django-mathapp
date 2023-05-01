@@ -31,7 +31,6 @@ var flipped_box_id = null;
 var click_disabled = 0;
 
 window.addEventListener('DOMContentLoaded', (event) => {
-
     // create rows of boxes, set id and class
     for(i=0; i<n_row; i++) {
         let rowid = 'row'+i;
@@ -74,40 +73,32 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     for (const [bid, n] of box_map.entries()) {
-        console.log('bid = '+bid +' '+ n);
         document.getElementById(bid).addEventListener('click', (event) => {
+            if (click_disabled) {
+                return
+            }
 
             if (flipped_box_id == null) {
                 event.target.innerHTML = n;
                 flipped_box_id = bid;
-                console.log('null: ' + bid);
+                // console.log('null: ' + bid);
             } else {
-                console.log('not null bid: ' + bid);
-                console.log('not null flipped_box_id: ' + flipped_box_id);
                 event.target.innerHTML = n;
                 let f_box = document.getElementById(flipped_box_id);
                 if (n == f_box.innerHTML) {
                     alert("hooray!!");
                     flipped_box_id = null;
                 } else {
-                    // click_disabled = 1;
+                    click_disabled = 1;
                     setTimeout(function() {
                         event.target.innerHTML = '';
                         f_box.innerHTML = '';
                         flipped_box_id = null;
+                        click_disabled = 0;
                     }, 2000);
-                    // click_disabled = 0;
                 }
             }
         });
     }
 });
     
-var myMap = new Map();
-myMap.set("0", "foo");
-myMap.set(1, "bar");
-myMap.set({}, "baz");
-
-for (const entry of myMap.entries()) {
-  console.log(entry);
-}
