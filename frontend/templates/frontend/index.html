@@ -4,31 +4,31 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="section-container">
-        <div id="nav-bar">
-            <div class="nav-bar-item"><a href="{% url 'frontend:math' %}">Math</a></div>
-            <div class="nav-bar-item"><a href="{% url 'frontend:match' %}">Match</a></div>
-            <div class="nav-bar-item">
-                <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'images/pb4-1.png' %}" class="pbimgs"></span>
-                <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'images/pb4-2.png' %}" class="pbimgs"></span>
-                <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'images/pb4-3.png' %}" class="pbimgs"></span>
-                <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'images/pb4-4.png' %}" class="pbimgs"></span>
-            </div>
-            <div class="nav-bar-item">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'login' %}">{{ user }}</a>
-                    {{ user.id|json_script:"user_id" }}
-                {% else %}
-                    Login
-                {% endif %}
-            </div>
 
+<div class="section-container">
+    <div id="nav-bar">
+        <div class="nav-bar-item"><a href="{% url 'frontend:math' %}">Math</a></div>
+        <div class="nav-bar-item"><a href="{% url 'frontend:match' %}">Match</a></div>
+        <div class="nav-bar-item"><a href="{% url 'frontend:game' %}">Game</a></div>
+        <div class="nav-bar-item">
+            <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'images/pb4-1.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'images/pb4-2.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'images/pb4-3.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'images/pb4-4.png' %}" class="pbimgs"></span>
         </div>
-        
+        <div class="nav-bar-item">
+            {% if user.is_authenticated %}
+                <a href="{% url 'login' %}">{{ user }}</a>
+                {{ user.id|json_script:"user_id" }}
+            {% else %}
+                Login
+            {% endif %}
+        </div>
+
     </div>
     
 </div>
+    
 
 {% block main-app %}
 <!-- main app -->

@@ -1,0 +1,30 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/game.css' %}">
+{% endblock %}
+
+
+
+{% block main-app %}
+
+<!-- <div id="main-container" class="container1"> -->
+<div id="container">
+    <div class="section-container">
+        <div id="game-app">
+            
+        </div>
+
+        
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<script type="text/javascript" src="{% static 'js/game.js' %}"></script>
+{% endblock %}

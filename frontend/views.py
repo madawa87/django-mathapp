@@ -54,7 +54,6 @@ def get_common_context(user):
     print ("Common context: {}".format(context))
     return context
 
-
 # Create your views here.
 @login_required
 def index_view(request):
@@ -75,6 +74,12 @@ def match_view(request):
     context = get_common_context(request.user)
     print ("match_view context: {}".format(context))
     return render(request, 'frontend/match.html', context)
+
+@login_required
+def game_view(request):
+    context = get_common_context(request.user)
+    print ("match_view context: {}".format(context))
+    return render(request, 'frontend/game.html', context)
 
 
 # def index_view(request):
