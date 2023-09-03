@@ -1,8 +1,9 @@
 secrets/
-kidsm_env/
+kidsm_env
 load_env
 run-math
 kidsm/__pycache__/
 frontend/__pycache__/
 mathapi/__pycache__/
 db.sqlite3
+node_modules/
