@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "tailwindcss -i frontend/static/frontend/css/tailwind_in/home_tw.css -o frontend/static/frontend/css/home.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
