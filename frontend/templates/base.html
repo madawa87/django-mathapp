@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" -->
+    <!-- integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
     <!-- custom css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/main.css' %}">
 
     <!-- app specific css -->
     {% block app-spec-css %}
@@ -24,21 +24,17 @@
 
     <title>Django Authentication System - HLAB</title>
   </head>
+  <!-- <body class="bg-sky-400"> -->
+  <!-- <body class="bg-gradient-to-r from-cyan-100 from-5% via-sky-300 via-50% to-cyan-100"> -->
   <body>
+  {% block content %}
 
-    <div class="container-fluid">
-    
-    {% block content %}
+  {% endblock %}
 
-    {% endblock %}
+  <hr>
 
-    </div>
-    <hr>
- 
-    <div class="container-fluid">
-      {% block footer-block %}
-      {% endblock %}
-    </div>
+  {% block footer-block %}
+  {% endblock %}
  
 
     <!-- Optional JavaScript -->

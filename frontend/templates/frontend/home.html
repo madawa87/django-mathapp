@@ -3,20 +3,26 @@
 <!-- need to load static files if use them within this file -->
 {% load static %}
 
+{% block app-spec-css %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/home.css' %}"> -->
+{% endblock %}
 {% block main-app %}
 
-<!-- <div id="main-container" class="container1"> -->
-<div id="container">
-    <div class="section-container">
-        <!-- <div class="d-flex p-2 bd-highlight justify-content-center">Type the answer to this math equation</div> -->
-
-        <div id="form-wrapper">
-            Heres some stats
-        </div>
-
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="flex flex-col mx-auto space-y-4 font-sans text-white text-sm font-bold leading-6 max-w-xs mt-4 mb-8">
+    <div class="p-4 rounded-lg flex items-center justify-center bg-indigo-500 shadow-lg">
+      <a href="{% url 'frontend:math' %}">Math</a>
     </div>
-
+    <div class="p-4 rounded-lg flex items-center justify-center bg-indigo-500 shadow-lg">
+      <a href="{% url 'frontend:match' %}">Match</a>
+    </div>
+    <div class="p-4 rounded-lg flex items-center justify-center bg-indigo-500 shadow-lg">
+      <a href="{% url 'frontend:game' %}">Game</a>
+    </div>
+  </div>
+  </div>
 </div>
+
 
 {% endblock %}
 

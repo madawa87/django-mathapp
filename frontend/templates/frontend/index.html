@@ -5,18 +5,27 @@
 
 {% block content %}
 
-<div class="section-container">
-    <div id="nav-bar">
-        <div class="nav-bar-item"><a href="{% url 'frontend:math' %}">Math</a></div>
-        <div class="nav-bar-item"><a href="{% url 'frontend:match' %}">Match</a></div>
-        <div class="nav-bar-item"><a href="{% url 'frontend:game' %}">Game</a></div>
-        <div class="nav-bar-item">
-            <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'images/pb4-1.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'images/pb4-2.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'images/pb4-3.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'images/pb4-4.png' %}" class="pbimgs"></span>
+<div class="max-w-md m-2 mx-auto bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+    <div class="flex flex-row">
+        <div class="flex flex-row  mx-1 grow h-14 items-center text-s text-zinc-800">
+            <div class="flex flex-row mx-1  items-center justify-center rounded-lg bg-indigo-300 w-16 border border-indigo-500 shadow-lg">
+                <span id="pk-b1" class="mx-1">{{ pb1 }}</span> <img src="{% static 'frontend/images/pb4-1.png' %}" class="w-auto h-4 m-1">
+            </div>
+            <div class="flex flex-row mx-1 items-center justify-center rounded-lg bg-indigo-300 w-16 border border-indigo-500 shadow-lg">
+                <span id="pk-b2" class="mx-1">{{ pb2 }}</span> <img src="{% static 'frontend/images/pb4-2.png' %}" class="w-auto h-4 m-1">
+            </div>
+            <div class="flex flex-row mx-1 items-center justify-center rounded-lg bg-indigo-300 w-16 border border-indigo-500 shadow-lg">
+                <span id="pk-b3" class="mx-1">{{ pb3 }}</span> <img src="{% static 'frontend/images/pb4-3.png' %}" class="w-auto h-4 m-1">
+            </div>
+            <div class="flex flex-row mx-1 items-center justify-center rounded-lg bg-indigo-300 w-16 border border-indigo-500 shadow-lg">
+                <span id="pk-b4" class="mx-1">{{ pb4 }}</span> <img src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-4 m-1">
+            </div>
+            <!-- <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'frontend/images/pb4-1.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'frontend/images/pb4-2.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'frontend/images/pb4-3.png' %}" class="pbimgs"></span>
+            <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'frontend/images/pb4-4.png' %}" class="pbimgs"></span> -->
         </div>
-        <div class="nav-bar-item">
+        <div class="flex grow-0 items-center justify-center w-12 mx-2 text-xs">
             {% if user.is_authenticated %}
                 <a href="{% url 'login' %}">{{ user }}</a>
                 {{ user.id|json_script:"user_id" }}
@@ -24,9 +33,7 @@
                 Login
             {% endif %}
         </div>
-
     </div>
-    
 </div>
     
 
