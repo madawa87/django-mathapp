@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+
+        @apply bg-gradient-to-r;
+        @apply from-cyan-100;
+        @apply from-5%;
+        @apply via-sky-300;
+        @apply via-50%;
+        @apply to-cyan-100;
+    }
+}
