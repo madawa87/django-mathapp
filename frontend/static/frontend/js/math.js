@@ -70,7 +70,7 @@ function populateEquationDB() {
         .then((data) => {
             console.log(data);
 
-            equn.innerText = '' + data['operand1'] + ' ' + data['operator'] + ' ' + data['operand2'] + ' =';
+            equn.innerText = '' + data['operand1'] + ' ' + data['operator'] + ' ' + data['operand2'];
             ans.innerText = data['answer'];
             q_id = data['id']
         });
@@ -90,20 +90,20 @@ const TR1_THRESHOLD = 15;
 const TR2_THRESHOLD = 10;
 const TR3_THRESHOLD = 5;
 
-const TIME_COLOR_CODES = {
+const REMAINING_TIME_COLOR_CODES = {
     l1: {
-        color: "green"
+        color: "bg-green-500"
     },
     l2: {
-        color: "yellow",
+        color: "bg-yellow-400",
         threshold: TR1_THRESHOLD
     },
     l3: {
-        color: "orange",
+        color: "bg-orange-500",
         threshold: TR2_THRESHOLD
     },
     l4: {
-        color: "red",
+        color: "bg-pink-700",
         threshold: TR3_THRESHOLD
     }
 };
@@ -112,58 +112,6 @@ const TIME_LIMIT = 20;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
-let remainingPathColor = TIME_COLOR_CODES.l1.color;
-
-
-function reset_timer(){
-    document.getElementById("app").innerHTML = `
-    <div class="base-timer">
-    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-        <path
-            id="base-timer-path-remaining"
-            stroke-dasharray="283"
-            class="base-timer__path-remaining ${remainingPathColor}"
-            d="
-            M 50, 50
-            m -45, 0
-            a 45,45 0 1,0 90,0
-            a 45,45 0 1,0 -90,0
-            "
-        ></path>
-        </g>
-    </svg>
-    <span id="base-timer-label" class="base-timer__label">${formatTime(
-        timeLeft
-    )}</span>
-    </div>
-    `;
-}
-
-document.getElementById("app").innerHTML = `
-<div class="base-timer">
-  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g class="base-timer__circle">
-      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-      <path
-        id="base-timer-path-remaining"
-        stroke-dasharray="283"
-        class="base-timer__path-remaining ${remainingPathColor}"
-        d="
-          M 50, 50
-          m -45, 0
-          a 45,45 0 1,0 90,0
-          a 45,45 0 1,0 -90,0
-        "
-      ></path>
-    </g>
-  </svg>
-  <span id="base-timer-label" class="base-timer__label">${formatTime(
-    timeLeft
-)}</span>
-</div>
-`;
 
 startTimer();
 
@@ -172,77 +120,49 @@ function onTimesUp() {
 }
 
 function startTimer() {
+    resetRemainingTimeDiv();
     timerInterval = setInterval(() => {
         timePassed = timePassed += 1;
         timeLeft = TIME_LIMIT - timePassed;
         if (timeLeft < 0) {
             timeLeft = 0
         }
-        document.getElementById("base-timer-label").innerHTML = formatTime(
-            timeLeft
-        );
-        setCircleDasharray();
-        setRemainingPathColor(timeLeft);
-        // console.log("in startTimer ", timePassed);
+        setRemainingTimeDiv();
+        setRemainingTimeDivColor(timeLeft);
+
         if (timeLeft === 0) {
             onTimesUp();
         }
     }, 1000);
 }
 
-function formatTime(time) {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-
-    if (seconds < 10) {
-        seconds = `0${seconds}`;
-    }
-
-    return `${minutes}:${seconds}`;
-}
-
-function setRemainingPathColor(timeLeft) {
-    const { l4, l3, l2, l1 } = TIME_COLOR_CODES;
-    // console.log("---", alert.color,  warning.color, info.color);
+function setRemainingTimeDivColor(timeLeft) {
+    const { l4, l3, l2, l1 } = REMAINING_TIME_COLOR_CODES;
+    target_div = document.getElementById("time-left-div");
     if (timeLeft <= l4.threshold) {
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.remove(l3.color);
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.add(l4.color);
+        target_div.classList.remove(l3.color);
+        target_div.classList.add(l4.color);
     } else if (timeLeft <= l3.threshold) {
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.remove(l2.color);
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.add(l3.color);
+        target_div.classList.remove(l2.color);
+        target_div.classList.add(l3.color);
     } else if (timeLeft <= l2.threshold) {
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.remove(l1.color);
-        document
-            .getElementById("base-timer-path-remaining")
-            .classList.add(l2.color);
+        target_div.classList.remove(l1.color);
+        target_div.classList.add(l2.color);
     }
 }
 
-function calculateTimeFraction() {
-    const rawTimeFraction = timeLeft / TIME_LIMIT;
-    return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+function setRemainingTimeDiv() {
+    const width_perc = `width: ${(100*timeLeft/TIME_LIMIT).toFixed(0)}%`;
+    document.getElementById("time-left-div").setAttribute("style", width_perc);
 }
-
-
-function setCircleDasharray() {
-    const circleDasharray = `${(
-        calculateTimeFraction() * FULL_DASH_ARRAY
-    ).toFixed(0)} 283`;
-    // Length = 2πr = 2 * π * 45 = 282,6
-
-    document
-        .getElementById("base-timer-path-remaining")
-        .setAttribute("stroke-dasharray", circleDasharray);
+function resetRemainingTimeDiv() {
+    console.log("resetting time remainin div");
+    target_div = document.getElementById("time-left-div");
+    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l4.color);
+    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l3.color);
+    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l2.color);
+    target_div.classList.add(REMAINING_TIME_COLOR_CODES.l1.color);
+    target_div.setAttribute("style", "width: 100%");
 }
 
 
@@ -450,8 +370,6 @@ input_answer.addEventListener('keypress', function (event) {
             clearInterval(timerInterval);
             timePassed = 0;
             timeLeft = TIME_LIMIT - timePassed;
-            setRemainingPathColor();
-            reset_timer();
             startTimer();
         }
         else {
