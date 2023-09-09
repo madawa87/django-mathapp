@@ -20,7 +20,7 @@ const csrftoken = getCookie('csrftoken');
 
 ////////////////////////////////////////////////////////
 let app_div = document.getElementById('match-app');
-let n_row = 4;
+let n_row = 6;
 let n_col = 5;
 
 const n_numbers = n_row*n_col/2
@@ -36,13 +36,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let rowid = 'row'+i;
         row_div = document.createElement('div');
         row_div.setAttribute('id', rowid);
-        row_div.setAttribute('class', 'mg-row');
+        row_div.setAttribute('class', 'flex flex-row items-center justify-center h-14 m-2');
         for(j=0; j<n_col; j++){
             let boxid = rowid + '-col'+j;
             rowitem = document.createElement('div');
             rowitem.setAttribute('id', boxid);
             rowitem.innerHTML = i + ', ' + j
-            rowitem.setAttribute('class','mg-box');
+            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-400 rounded-lg bg-gradient-to-r from-purple-300 to-indigo-300 hover:from-indigo-400 hover:to-purple-400');
             row_div.appendChild(rowitem);
             puzzle_boxes.push(boxid);
         }
@@ -73,30 +73,40 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     for (const [bid, n] of box_map.entries()) {
-        document.getElementById(bid).addEventListener('click', (event) => {
+        document.getElementById(bid).addEventListener('click', (ev) => {
             if (click_disabled) {
-                return
+                return;
+            }
+            // prevent clicking the same box triggering a match
+            if (flipped_box_id == bid){
+                return;
             }
 
+            ev.target.innerHTML = n;
+
             if (flipped_box_id == null) {
-                event.target.innerHTML = n;
                 flipped_box_id = bid;
-                // console.log('null: ' + bid);
+                return;
+            }
+            
+            let f_box = document.getElementById(flipped_box_id);
+
+            if (n == f_box.innerHTML) {
+                alert("hooray!!");
+                flipped_box_id = null;
+                dis_div_classes = 'flex items-center justify-center h-12 w-12 m-2 border-1 border-1 border-slate-600 rounded-lg bg-gradient-to-r from-zinc-200 via-slate-300 to-slate-200';
+                f_box.setAttribute('class', dis_div_classes);
+                ev.target.setAttribute('class',dis_div_classes);
+                f_box.parentElement.replaceChild(f_box.cloneNode(true), f_box);
+                ev.target.parentElement.replaceChild(ev.target.cloneNode(true), ev.target);
             } else {
-                event.target.innerHTML = n;
-                let f_box = document.getElementById(flipped_box_id);
-                if (n == f_box.innerHTML) {
-                    alert("hooray!!");
+                click_disabled = 1;
+                setTimeout(function() {
+                    ev.target.innerHTML = '';
+                    f_box.innerHTML = '';
                     flipped_box_id = null;
-                } else {
-                    click_disabled = 1;
-                    setTimeout(function() {
-                        event.target.innerHTML = '';
-                        f_box.innerHTML = '';
-                        flipped_box_id = null;
-                        click_disabled = 0;
-                    }, 2000);
-                }
+                    click_disabled = 0;
+                }, 1000);
             }
         });
     }

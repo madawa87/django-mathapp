@@ -4,22 +4,14 @@
 {% load static %}
 
 {% block app-spec-css %}
-<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/match.css' %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/match.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/home.css' %}">
+
 {% endblock %}
 
-
-
 {% block main-app %}
-
-<!-- <div id="main-container" class="container1"> -->
-<div id="container">
-    <div class="section-container">
-        <div id="match-app">
-
-        </div>
-    </div>
+<div id="match-app" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
 </div>
-
 {% endblock %}
 
 {% block app-spec-js %}
