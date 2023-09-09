@@ -1,19 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-    <div class="row">
-        <br>
-        <br>
-    </div>
-    <div class="row">
-        <div class="col-md-6 offset-3">
-          <h2>Login:</h2>
-          <form method="post">
+
+<div class="max-w-md mx-auto text-lg bg-white rounded-xl shadow-md m-4 overflow-hidden md:max-w-2xl">
+    <div class="flex flex-col items-center m-4">
+        <form method="post" class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
-        </div>
+            <!-- {{ form.as_p }} -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    Username
+                </label>
+                <input
+                    type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username"
+                    maxlength="50" required="" id="id_username" placeholder="Username"
+                    class="shadow appearance-none border border-cyan-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    Password
+                </label>
+                <input
+                    type="password" name="password" autocomplete="current-password" maxlength="50" 
+                    required="" id="id_password" placeholder="**********"
+                    class="shadow appearance-none border border-cyan-300 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit">
+                    Login
+                </button>
+            </div>
+
+        </form>
+
     </div>
-    </div>
+
+</div>
 {% endblock %}
