@@ -136,6 +136,7 @@ STATICFILES_DIRS = [
     # "frontend/static",
     BASE_DIR / "frontend" / "static"
 ]
+STATIC_ROOT = BASE_DIR / "local_cdn"
 
 
 # login redirect
