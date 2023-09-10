@@ -84,11 +84,9 @@ populateEquationDB();
 // focus on answer input
 input_answer.focus();
 
-// Credit: Mateusz Rybczonec
-const FULL_DASH_ARRAY = 283;
-const TR1_THRESHOLD = 15;
-const TR2_THRESHOLD = 10;
-const TR3_THRESHOLD = 5;
+const TR1_THRESHOLD = 18;
+const TR2_THRESHOLD = 15;
+const TR3_THRESHOLD = 10;
 
 const REMAINING_TIME_COLOR_CODES = {
     l1: {
@@ -103,7 +101,7 @@ const REMAINING_TIME_COLOR_CODES = {
         threshold: TR2_THRESHOLD
     },
     l4: {
-        color: "bg-pink-700",
+        color: "bg-red-500",
         threshold: TR3_THRESHOLD
     }
 };
@@ -139,6 +137,8 @@ function startTimer() {
 function setRemainingTimeDivColor(timeLeft) {
     const { l4, l3, l2, l1 } = REMAINING_TIME_COLOR_CODES;
     target_div = document.getElementById("time-left-div");
+    target_img = document.getElementById("reward_image");
+     
     if (timeLeft <= l4.threshold) {
         target_div.classList.remove(l3.color);
         target_div.classList.add(l4.color);

@@ -15,7 +15,7 @@
         <form id="form">
             <input id="correct-answer" type="hidden">
             {% csrf_token %}
-            <div class="flex flex-col m-4 items-center mx-4 bg-cyan-300 rounded-xl">
+            <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl">
                 <div class="flex items-center justify-center h-14">
                     <!-- <p>text3</p> -->
                     <label id="math-eqn" class="text-4xl font-bold text-zinc-800"> </label>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="flex my-4 items-center h-14">
                     <input id="answer" class="mx-4 block w-full px-3 py-2 h-10 shadow-l
-                            bg-indigo-200 border border-slate-300 rounded-lg placeholder-slate-400
+                            bg-indigo-100 border border-slate-300 rounded-lg placeholder-slate-400
                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                             type="number" name="answer" placeholder="Answer" 
                             pattern="[0-9]*" inputmode="numeric" onwheel="return false;">
@@ -35,17 +35,26 @@
     </div>
 
     <!-- <div id="app" class="app_flex_box"></div> -->
+    <div class="flex flex-row my-2 mx-4">
+        <div class="flex flex-col grow items-center my-2 mr-2 bg-gradient-to-br from-slate-300 to-slate-200 rounded-xl ">
+            <div class="flex-start flex h-full w-full rounded-xl overflow-hidden">
+                <div
+                    id="time-left-div"
+                    class="h-full items-baseline justify-center transition-all duration-500 overflow-hidden break-all rounded-xl bg-green-500"
+                    style="width: 100%;"
+                ></div>
+              </div>
+        </div>
 
-    <div class="flex flex-col m-4 items-center mx-4 bg-slate-600 opacity-70 rounded-xl">
-        <div class="flex-start flex h-3 w-full overflow-hidden rounded-sm bg-blue-gray-50 font-sans text-xs font-medium">
-            <div
-                id="time-left-div"
-                class="flex h-full items-baseline justify-center transition-all duration-500 overflow-hidden break-all rounded-xl bg-green-500 text-white"
-                style="width: 50%;"
-            ></div>
-          </div>
+        <div class="flex items-center justify-center my-2 rounded-lg bg-indigo-100 border border-indigo-200 shadow-lg">
+            <span class="text-xs font-medium pl-2">
+                Reward: 
+            </span>
+            <img id="reward_image" src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-3 mx-1">
+        </div>
     </div>
-    <div class="flex flex-col m-4 items-center mx-4 bg-cyan-300 rounded-xl text-s text-zinc-800">
+
+    <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
 
         <div class="flex flex-row items-center m-2 h-10">
             <p>streak: &nbsp;</p> 
