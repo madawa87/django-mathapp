@@ -10,7 +10,31 @@
 {% endblock %}
 
 {% block main-app %}
-<div id="match-app" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div id="match-app" class="flex flex-col m-4 items-center mx-4 font-medium bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl">
+
+    </div>
+
+
+    <div class="flex flex-col my-2 mx-4">
+
+        <div class="flex flex-col grow h-3 items-center mt-2 mb-1 bg-gradient-to-br from-slate-300 to-slate-200 rounded-xl ">
+            <div class="flex-start flex h-full w-full rounded-xl overflow-hidden">
+                <div
+                    id="reward-meter-div"
+                    class="h-full items-baseline justify-center transition-all duration-500 overflow-hidden break-all rounded-xl bg-green-500"
+                    style="width: 100%;"
+                ></div>
+              </div>
+        </div>
+
+        <div class="flex items-center justify-center my-1 rounded-lg bg-indigo-100 border border-indigo-200 shadow-lg">
+            <span class="text-xs font-medium pl-2">
+                Reward: 
+            </span>
+            <img id="reward_image" src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-3 mx-1">
+        </div>
+    </div>
 </div>
 {% endblock %}
 

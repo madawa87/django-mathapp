@@ -127,7 +127,7 @@ function startTimer() {
         }
         setRemainingTimeDiv();
         setRemainingTimeDivColor(timeLeft);
-
+        
         if (timeLeft === 0) {
             onTimesUp();
         }
@@ -138,16 +138,20 @@ function setRemainingTimeDivColor(timeLeft) {
     const { l4, l3, l2, l1 } = REMAINING_TIME_COLOR_CODES;
     target_div = document.getElementById("time-left-div");
     target_img = document.getElementById("reward_image");
-     
+    console.log(target_img.src);
+    
     if (timeLeft <= l4.threshold) {
         target_div.classList.remove(l3.color);
         target_div.classList.add(l4.color);
+        target_img.src = pb_1_src;
     } else if (timeLeft <= l3.threshold) {
         target_div.classList.remove(l2.color);
         target_div.classList.add(l3.color);
+        target_img.src = pb_2_src;
     } else if (timeLeft <= l2.threshold) {
         target_div.classList.remove(l1.color);
         target_div.classList.add(l2.color);
+        target_img.src = pb_3_src;
     }
 }
 
@@ -167,8 +171,6 @@ function resetRemainingTimeDiv() {
 
 
 function checkAnswer() {
-    console.log("checking...")
-    console.log("time left = " + timeLeft)
     let url = `http://127.0.0.1:8000/api/questions/${q_id}/checkAnswer/`;
     fetch(url, {
         method: 'POST',
@@ -185,10 +187,12 @@ function checkAnswer() {
     }).then((data) => {
         console.log(data)
         if (data['correct']) {
-            console.log("GOOD144");
+            // answer is corrrect
+            console.log("correct");
         }
         else {
-            console.log("BAD!!!wwww");
+            // answer is wrong
+            console.log("wrong answer");
         }
     });
 }
@@ -353,7 +357,6 @@ input_answer.addEventListener('keypress', function (event) {
         console.log(input_answer.value);
 
         if (input_answer.value === ans.innerText) {
-            console.log("correct!!!");
             // update streaks
             pass_inc = updateStreak(true);
             
