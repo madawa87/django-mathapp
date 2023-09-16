@@ -66,6 +66,10 @@ def index_view(request):
 @login_required
 def math_view(request):
     context = get_common_context(request.user)
+    # math reward tier thresholds
+    context['l1_thr'] = 18
+    context['l2_thr'] = 15
+    context['l3_thr'] = 12
     print ("math_view context: {}".format(context))
     return render(request, 'frontend/math.html', context)
 
