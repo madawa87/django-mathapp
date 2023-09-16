@@ -18,8 +18,19 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-// populate math-equn
+// feedback-modal
+feedback_modal_div = document.getElementById("feedback-modal");
+modal_h3 = document.getElementById("feedback-h3");
+modal_button = document.getElementById("feedback-button");
+modal_button.addEventListener('click', function (ev) {
+    feedback_modal_div.classList = [];
+    feedback_modal_div.classList.add('hidden');
+    timer_paused = false;
 
+    input_answer.focus();
+});
+
+// populate math-equn
 let equn = document.getElementById('math-eqn');
 let ans = document.getElementById('correct-answer');
 let input_answer = document.getElementById('answer');
@@ -84,9 +95,9 @@ populateEquationDB();
 // focus on answer input
 input_answer.focus();
 
-const TR1_THRESHOLD = 18;
-const TR2_THRESHOLD = 15;
-const TR3_THRESHOLD = 10;
+const TR1_THRESHOLD = l1_thr;
+const TR2_THRESHOLD = l2_thr;
+const TR3_THRESHOLD = l3_thr;
 
 const REMAINING_TIME_COLOR_CODES = {
     l1: {
@@ -110,6 +121,7 @@ const TIME_LIMIT = 20;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
+let timer_paused = false;
 
 startTimer();
 
@@ -120,6 +132,8 @@ function onTimesUp() {
 function startTimer() {
     resetRemainingTimeDiv();
     timerInterval = setInterval(() => {
+        if (timer_paused) return;
+
         timePassed = timePassed += 1;
         timeLeft = TIME_LIMIT - timePassed;
         if (timeLeft < 0) {
@@ -349,38 +363,96 @@ function updateStreak(is_correct) {
     return pass_inc;
 }
 
+modal_sym_circ = document.getElementById('sym-circ');
+modal_sym_svg = document.getElementById('sym-svg');
+modal_sym_svg_path = document.getElementById('sym-svg-path');
+
+
+function set_modal (is_correct) {
+    const circ_col = "bg-green-200";
+    const circ_col_wr = "bg-red-200";
+    const svg_stroke = "text-green-600";
+    const svg_stroke_wr = "text-red-600";
+    const svg_path = "M 1 14 L 8 22 L 22 1 L 8 17 Z";
+    const svg_path_wr = "M 2 3 L 5 1 L 22 20 L 20 21 Z M 22 3 L 19 1 L 2 20 L 4 21 Z";
+    const button_bg = "bg-green-600"
+    const button_bg_wr = "bg-red-600"
+    const button_bg_hv = "hover:bg-green-500"
+    const button_bg_hv_wr = "hover:bg-red-500"
+
+
+    if (is_correct) {
+        modal_h3.innerText = "Correct Answer!!";
+        modal_sym_circ.classList.remove(circ_col_wr);
+        modal_sym_circ.classList.add(circ_col);
+
+        modal_sym_svg.classList.remove(svg_stroke_wr);
+        modal_sym_svg.classList.add(svg_stroke);
+        modal_sym_svg.setAttribute('fill', 'rgb(22 163 74)');
+        
+        modal_sym_svg_path.setAttribute('d', svg_path);
+
+        modal_button.classList.remove(button_bg_wr);
+        modal_button.classList.remove(button_bg_hv_wr);
+        modal_button.classList.add(button_bg);
+        modal_button.classList.add(button_bg_hv);
+        modal_button.innerText = "Next Question";
+        
+        return
+    }
+    modal_h3.innerText = "Wrong Answer!!";
+    modal_sym_circ.classList.remove(circ_col);
+    modal_sym_circ.classList.add(circ_col_wr);
+    
+    modal_sym_svg.classList.remove(svg_stroke);
+    modal_sym_svg.classList.add(svg_stroke_wr);
+    modal_sym_svg.setAttribute('fill', 'rgb(220 38 38)');
+    
+    modal_sym_svg_path.setAttribute('d', svg_path_wr);
+    
+    modal_button.classList.remove(button_bg);
+    modal_button.classList.remove(button_bg_hv);
+    modal_button.classList.add(button_bg_wr);
+    modal_button.classList.add(button_bg_hv_wr);
+    modal_button.innerText = "Try Again";
+    return;
+
+}
+
 input_answer.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         event.preventDefault();
+        timer_paused = true;
         checkAnswer();
 
         console.log(input_answer.value);
+        feedback_modal_div.classList.remove("hidden");
+        modal_button.focus();
 
         if (input_answer.value === ans.innerText) {
+            // answer is correct
+            set_modal(true);
+            
             // update streaks
             pass_inc = updateStreak(true);
             
-            // updatePballs(true);
             updateInventory(true, pass_inc);
-            alert(input_answer.value + " is the correct answer.");
-
             // reload current page
             // window.location.href = window.location.href;
-
+            
             // populate equation instead of reloading current page
             populateEquationDB();
-
+            
             clearInterval(timerInterval);
             timePassed = 0;
             timeLeft = TIME_LIMIT - timePassed;
             startTimer();
         }
         else {
-            console.log("wrong answer!!!");
-            // updatePballs(false);
+            // answer is wrong
+            set_modal(false);
             pass_inc = updateStreak(false);
             updateInventory(false, pass_inc);
-            alert(input_answer.value + " is not the correct answer.");
             input_answer.value = ''
         }
     }
