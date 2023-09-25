@@ -15,6 +15,7 @@ from rest_framework import permissions, status
 from mathapi import serializers
 from mathapi.serializers import QuestionSerializer, StatSerializer
 from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory, Question, Stats
+from mathapi.utils.rewards import MathReward
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -222,31 +223,25 @@ def updateInventory(request, pk):
 
     response = {"updated": True}
 
+    reward_obj = MathReward()
+
     if inventory_obj and lt_inventory_obj:
         if request_data["inc"]:
-            tier = ceil(request_data["timeLeft"]/5)
+            # tier = ceil(request_data["timeLeft"]/5)
+
+            tier = reward_obj.get_reward_tier(request_data['timeLeft'])
+
             print ("timeleft: {}, tier: {}".format(request_data['timeLeft'], tier))
-            inventory_obj.tier4 = inventory_obj.tier4 + 1
-            inventory_obj.tier3 = inventory_obj.tier3 + 1
-            inventory_obj.tier2 = inventory_obj.tier2 + 1
-            inventory_obj.tier1 = inventory_obj.tier1 + 1
-            lt_inventory_obj.tier4 = lt_inventory_obj.tier4 + 1
-            lt_inventory_obj.tier3 = lt_inventory_obj.tier3 + 1
-            lt_inventory_obj.tier2 = lt_inventory_obj.tier2 + 1
-            lt_inventory_obj.tier1 = lt_inventory_obj.tier1 + 1
-            if request_data["timeLeft"] < 19:
-                if tier != 4:
-                    inventory_obj.tier4 = inventory_obj.tier4 - 1
-                    lt_inventory_obj.tier4 = lt_inventory_obj.tier4 - 1
-                if tier != 3:
-                    inventory_obj.tier3 = inventory_obj.tier3 - 1
-                    lt_inventory_obj.tier3 = lt_inventory_obj.tier3 - 1
-                if tier != 2:
-                    inventory_obj.tier2 = inventory_obj.tier2 - 1
-                    lt_inventory_obj.tier2 = lt_inventory_obj.tier2 - 1
-                if tier != 1:
-                    inventory_obj.tier1 = inventory_obj.tier1 - 1
-                    lt_inventory_obj.tier1 = lt_inventory_obj.tier1 - 1
+
+            inventory_obj.tier4 = inventory_obj.tier4 + tier['t4']
+            inventory_obj.tier3 = inventory_obj.tier3 + tier['t3']
+            inventory_obj.tier2 = inventory_obj.tier2 + tier['t2']
+            inventory_obj.tier1 = inventory_obj.tier1 + tier['t1']
+            lt_inventory_obj.tier4 = lt_inventory_obj.tier4 + tier['t4']
+            lt_inventory_obj.tier3 = lt_inventory_obj.tier3 + tier['t3']
+            lt_inventory_obj.tier2 = lt_inventory_obj.tier2 + tier['t2']
+            lt_inventory_obj.tier1 = lt_inventory_obj.tier1 + tier['t1']
+            
             # pass has to be increased no matter what depending of the val in request data, since it sends 0 
             # in no update is needed
             inventory_obj.passes = inventory_obj.passes + request_data["inc_pass"]

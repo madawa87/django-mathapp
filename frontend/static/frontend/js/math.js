@@ -101,19 +101,20 @@ const TR3_THRESHOLD = l3_thr;
 
 const REMAINING_TIME_COLOR_CODES = {
     l1: {
-        color: "bg-green-500"
+        color: "bg-red-500",
+        threshold: l1_thr
     },
     l2: {
-        color: "bg-yellow-400",
-        threshold: TR1_THRESHOLD
+        color: "bg-orange-500",
+        threshold: l2_thr
     },
     l3: {
-        color: "bg-orange-500",
-        threshold: TR2_THRESHOLD
+        color: "bg-yellow-400",
+        threshold: l3_thr
     },
     l4: {
-        color: "bg-red-500",
-        threshold: TR3_THRESHOLD
+        color: "bg-green-500",
+        threshold: l4_thr
     }
 };
 
@@ -154,18 +155,22 @@ function setRemainingTimeDivColor(timeLeft) {
     target_img = document.getElementById("reward_image");
     console.log(target_img.src);
     
-    if (timeLeft <= l4.threshold) {
-        target_div.classList.remove(l3.color);
-        target_div.classList.add(l4.color);
-        target_img.src = pb_1_src;
-    } else if (timeLeft <= l3.threshold) {
-        target_div.classList.remove(l2.color);
-        target_div.classList.add(l3.color);
-        target_img.src = pb_2_src;
-    } else if (timeLeft <= l2.threshold) {
+    if (timeLeft >= l4.threshold) {
         target_div.classList.remove(l1.color);
-        target_div.classList.add(l2.color);
+        target_div.classList.add(l4.color);
+        target_img.src = pb_4_src;
+    } else if (timeLeft >= l3.threshold) {
+        target_div.classList.remove(l4.color);
+        target_div.classList.add(l3.color);
         target_img.src = pb_3_src;
+    } else if (timeLeft >= l2.threshold) {
+        target_div.classList.remove(l3.color);
+        target_div.classList.add(l2.color);
+        target_img.src = pb_2_src;
+    } else{
+        target_div.classList.remove(l2.color);
+        target_div.classList.add(l1.color);
+        target_img.src = pb_1_src;
     }
 }
 
@@ -176,10 +181,10 @@ function setRemainingTimeDiv() {
 function resetRemainingTimeDiv() {
     console.log("resetting time remainin div");
     target_div = document.getElementById("time-left-div");
-    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l4.color);
-    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l3.color);
+    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l1.color);
     target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l2.color);
-    target_div.classList.add(REMAINING_TIME_COLOR_CODES.l1.color);
+    target_div.classList.remove(REMAINING_TIME_COLOR_CODES.l3.color);
+    target_div.classList.add(REMAINING_TIME_COLOR_CODES.l4.color);
     target_div.setAttribute("style", "width: 100%");
 }
 
