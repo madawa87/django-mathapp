@@ -7,3 +7,4 @@ frontend/__pycache__/
 mathapi/__pycache__/
 db.sqlite3
 node_modules/
+mathapi/*/__pycache__/

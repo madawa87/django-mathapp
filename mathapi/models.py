@@ -27,9 +27,11 @@ class Coins(models.Model):
 
 class Pokeballs(models.Model):
     user = models.ForeignKey('auth.User', related_name='pokeballs', on_delete=models.CASCADE)
+    # standard ball
     tier1 = models.IntegerField(default=0)
     tier2 = models.IntegerField(default=0)
     tier3 = models.IntegerField(default=0)
+    # master ball
     tier4 = models.IntegerField(default=0)
 
 class LifetimePokeballs(models.Model):
@@ -47,6 +49,9 @@ class Inventory(models.Model):
     tier4 = models.IntegerField(default=0)
 
     passes = models.IntegerField(default=0)
+    coins = models.IntegerField(default=0)
+    trapModules = models.IntegerField(default=0)
+    
 
 class LifetimeInventory(models.Model):
     user = models.ForeignKey('auth.User', related_name='lifetime_inventory', on_delete=models.CASCADE)
@@ -56,6 +61,8 @@ class LifetimeInventory(models.Model):
     tier4 = models.IntegerField(default=0)
 
     passes = models.IntegerField(default=0)
+    coins = models.IntegerField(default=0)
+    trapModules = models.IntegerField(default=0)
 
 class Pokemon(models.Model):
     # user = models.ForeignKey('auth.User', related_name='pokemon', on_delete=models.CASCADE)

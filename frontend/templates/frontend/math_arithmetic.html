@@ -1,0 +1,144 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/home.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/math.css' %}">
+{% endblock %}
+
+{% block main-app %}
+<div class="max-w-md mx-auto my-2 bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div>
+
+        <form id="form">
+            <input id="correct-answer" type="hidden">
+            {% csrf_token %}
+            <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl">
+                <div class="flex items-center justify-center h-14">
+                    <!-- <p>text3</p> -->
+                    <label id="math-eqn" class="text-4xl font-bold text-zinc-800"> </label>
+                </div>
+                <div class="flex items-center justify-center h-14">
+                    <p class="text-4xl font-bold text-zinc-800"> = </p>
+                </div>
+                <div class="flex my-4 items-center h-14">
+                    <input id="answer" class="mx-4 block w-full px-3 py-2 h-10 shadow-l
+                            bg-indigo-100 border border-slate-300 rounded-lg placeholder-slate-400
+                            focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-xl text-center font-medium"
+                            type="number" name="answer" placeholder="Answer" 
+                            pattern="[0-9]*" inputmode="numeric" onwheel="return false;">
+                </div>
+                <div id="feedback-modal" class="hidden">
+                    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                        <!--
+                          Background backdrop, show/hide based on modal state.
+                      
+                          Entering: "ease-out duration-300"
+                            From: "opacity-0"
+                            To: "opacity-100"
+                          Leaving: "ease-in duration-200"
+                            From: "opacity-100"
+                            To: "opacity-0"
+                        -->
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-md"></div>
+                      
+                        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                          <div class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+                            <!--
+                              Modal panel, show/hide based on modal state.
+                      
+                              Entering: "ease-out duration-300"
+                                From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                To: "opacity-100 translate-y-0 sm:scale-100"
+                              Leaving: "ease-in duration-200"
+                                From: "opacity-100 translate-y-0 sm:scale-100"
+                                To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            -->
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                              <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-center">
+                                  <div id="sym-circ" class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-200 sm:mx-0 sm:h-10 sm:w-10">
+                                    <svg id="sym-svg" class="h-6 w-6 text-green-600" fill="rgb(22 163 74)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                      <path id="sym-svg-path" stroke-linecap="round" stroke-linejoin="round" d="M 1 14 L 8 22 L 22 1 L 8 17 Z" />
+                                    </svg>
+                                  </div>
+                                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                    <h3 id="feedback-h3" class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Correct Answer!!</h3>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <button id="feedback-button" type="button" 
+                                  class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 
+                                          text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">
+                                          Next Question
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- <div id="app" class="app_flex_box"></div> -->
+    <div class="flex flex-row my-2 mx-4">
+        <div class="flex flex-col grow items-center my-2 mr-2 bg-gradient-to-br from-slate-300 to-slate-200 rounded-xl ">
+            <div class="flex-start flex h-full w-full rounded-xl overflow-hidden">
+                <div
+                    id="time-left-div"
+                    class="h-full items-baseline justify-center transition-all duration-500 overflow-hidden break-all rounded-xl bg-green-500"
+                    style="width: 100%;"
+                ></div>
+              </div>
+        </div>
+
+        <div class="flex items-center justify-center my-2 rounded-lg bg-indigo-100 border border-indigo-200 shadow-lg">
+            <span class="text-xs font-medium pl-2">
+                Reward: 
+            </span>
+            <img id="reward_image" src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-3 mx-1">
+        </div>
+    </div>
+
+    <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
+
+        <div class="flex flex-row items-center m-2 h-10">
+            <p>streak: &nbsp;</p> 
+            <!-- <div class="flex flex-row items-center border text-sm"> -->
+                <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
+            <!-- </div> -->
+            <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
+            <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
+        </div>
+        <div class="flex flex-row items-center m-2 h-10">
+            <!-- <div class="steak-bar-item">passes: <span id="passes-span">0</span></div> -->
+            <div class="steak-bar-item">passes: <span id="passes-span">0</span> ---- lf passes = <span id="passes-span-lf">{{ passes }}</span></div>
+        </div>
+    </div>
+
+    <div class="flex flex-col m-4 items-center ">
+      <button type="button" onclick="location.href=`{% url 'frontend:math' %}`;"
+          class="bg-slate-300 rounded-lg text-center w-full h-10">
+        Back
+      </button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<script>
+    const l1_thr = {{ l1_thr }};
+    const l2_thr = {{ l2_thr }};
+    const l3_thr = {{ l3_thr }};
+    const l4_thr = {{ l4_thr }};
+</script>
+<script type="text/javascript" src="{% static 'frontend/js/math.js' %}"></script>
+{% endblock %}
