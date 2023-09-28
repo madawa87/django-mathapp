@@ -26,7 +26,6 @@ modal_button.addEventListener('click', function (ev) {
     feedback_modal_div.classList = [];
     feedback_modal_div.classList.add('hidden');
     timer_paused = false;
-
     input_answer.focus();
 });
 
@@ -85,7 +84,6 @@ function populateEquationDB() {
             ans.innerText = data['answer'];
             q_id = data['id']
         });
-
     input_answer.value = '';
     // generateEquation();
 }
@@ -387,7 +385,7 @@ function set_modal (is_correct) {
 
 
     if (is_correct) {
-        modal_h3.innerText = "Correct Answer!!";
+        modal_h3.innerText = input_answer.value +" is the correct answer!!";
         modal_sym_circ.classList.remove(circ_col_wr);
         modal_sym_circ.classList.add(circ_col);
 
@@ -405,7 +403,7 @@ function set_modal (is_correct) {
         
         return
     }
-    modal_h3.innerText = "Wrong Answer!!";
+    modal_h3.innerText = input_answer.value +" is the wrong answer!!";
     modal_sym_circ.classList.remove(circ_col);
     modal_sym_circ.classList.add(circ_col_wr);
     
