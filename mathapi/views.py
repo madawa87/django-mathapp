@@ -74,7 +74,16 @@ def randomQuestion(request):
     serializer = QuestionSerializer(question, many=False)
     return JsonResponse(serializer.data)
     
-
+@api_view(['POST'])
+def levelRandomQuestion(request):
+    random.seed()
+    req_data = request.data
+    diff =req_data['level']
+    print(f"in levelRandomQuestion: diff: {diff}")
+    question_list = Question.objects.filter(difficulty=diff)
+    question = random.choice(question_list)
+    serializer = QuestionSerializer(question, many=False)
+    return JsonResponse(serializer.data)
 
 @api_view(['POST'])
 def checkAnswer(request, pk):
