@@ -12,6 +12,7 @@ urlpatterns = [
     path('stats/', views.StatList.as_view(), name='stat-list'),
     path('', views.default_view, name='default'),
     path('randomQuestion/', views.randomQuestion, name='api-randomQuestion'),
+    path('levelRandomQuestion/', views.levelRandomQuestion, name='api-levelRandomQuestion'),
     path('questions/<int:pk>/checkAnswer/', views.checkAnswer, name='api-checkAnswer'),
     path('users/<int:pk>/updateCoins/', views.updateCoins, name='api-updateCoins'),
     path('users/<int:pk>/updatePokeballs/', views.updatePokeballs, name='api-updatePokeballs'),

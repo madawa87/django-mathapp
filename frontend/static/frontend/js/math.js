@@ -40,6 +40,8 @@ let dive_streak = 0;
 let ultra_streak = 0;
 let master_streak = 0;
 
+let difficulty_level = 1;
+
 function clearStreaks() {
     dive_streak = 0;
     ultra_streak = 0;
@@ -88,8 +90,30 @@ function populateEquationDB() {
     // generateEquation();
 }
 
+function populateLvlEquationDB() {
+    let url = 'http://127.0.0.1:8000/api/levelRandomQuestion/';
 
-populateEquationDB();
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            level: difficulty_level,
+        })})
+        .then((resp) => resp.json())
+        .then((data) => {
+            console.log(data)
+            equn.innerText = '' + data['operand1'] + ' ' + data['operator'] + ' ' + data['operand2'];
+            ans.innerText = data['answer'];
+            q_id = data['id']
+        });
+    input_answer.value = '';
+}
+
+// populateEquationDB();
+populateLvlEquationDB();
 // focus on answer input
 input_answer.focus();
 
@@ -444,7 +468,8 @@ input_answer.addEventListener('keypress', function (event) {
             // window.location.href = window.location.href;
             
             // populate equation instead of reloading current page
-            populateEquationDB();
+            // populateEquationDB();
+            populateLvlEquationDB();
             
             clearInterval(timerInterval);
             timePassed = 0;
