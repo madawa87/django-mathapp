@@ -1,0 +1,113 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/home.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/math.css' %}">
+{% endblock %}
+
+{% block main-app %}
+<div class="max-w-md mx-auto my-2 bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div id="swap-contianer" >
+    <!-- arithmatic -->
+    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Pokeballs
+      </div>
+        <div class="flex flex-col w-full m-2">
+          <div class="flex flex-row grow items-center m-2 rounded-lg bg-gradient-to-r from-teal-200 via-cyan-200 to-cyan-300 border-2 border-cyan-300 ">
+            <div class="flex flex-row grow items-center">
+              <img src="{% static 'frontend/images/pb4-1.png' %}" class="h-6 w-auto m-2 opacity-100">
+              Standard Ball &nbsp 
+              <input id="sb-n" class="mx-2 block w-10 px-3 py-2 h-8 shadow-l
+              bg-indigo-100 border border-slate-300 rounded-lg
+              focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-xl text-center font-medium"
+              type="number" name="greatballs" placeholder="1" 
+              pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="flex flex-row items-center justify-end w-20 m-2 rounded-xl bg-slate-300 border border-slate-600">
+              10 &nbsp;
+              <img src="{% static 'frontend/images/coin1.png' %}" class="h-4 w-auto m-2 ">
+            </div>
+          </div>
+
+          <div class="flex flex-row grow items-center m-2 rounded-lg bg-gradient-to-r from-teal-200 via-cyan-200 to-cyan-300 border-2 border-cyan-300 ">
+            <div class="flex flex-row grow items-center">
+              <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-6 w-auto m-2 opacity-100">
+              Great Ball &nbsp 
+              <input id="gb-n" class="mx-2 block w-10 px-3 py-2 h-8 shadow-l
+              bg-indigo-100 border border-slate-300 rounded-lg
+              focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-xl text-center font-medium"
+              type="number" name="greatballs" placeholder="1" 
+              pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="flex flex-row items-center justify-end w-20 m-2 rounded-xl bg-slate-300 border border-slate-600">
+              50 &nbsp;
+              <img src="{% static 'frontend/images/coin1.png' %}" class="h-4 w-auto m-2 ">
+            </div>
+          </div>
+
+          <div class="flex flex-row grow items-center m-2 rounded-lg bg-gradient-to-r from-teal-200 via-cyan-200 to-cyan-300 border-2 border-cyan-300 ">
+            <div class="flex flex-row grow items-center">
+              <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-6 w-auto m-2 opacity-100">
+              Ultra Ball &nbsp 
+              <input id="ub-n" class="mx-2 block w-10 px-3 py-2 h-8 shadow-l
+              bg-indigo-100 border border-slate-300 rounded-lg
+              focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-xl text-center font-medium"
+              type="number" name="ultraballs" placeholder="1" 
+              pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="flex flex-row items-center justify-end w-20 m-2 rounded-xl bg-slate-300 border border-slate-600">
+              200 &nbsp;
+              <img src="{% static 'frontend/images/coin1.png' %}" class="h-4 w-auto m-2 ">
+            </div>
+          </div>
+                
+        </div>
+        <button type="button" onclick="location.href=`{% url 'frontend:math_arithmetic' %}`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        Play
+      </button>
+        
+    </div>
+    <!-- arithmatic -->
+    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Traps
+      </div>
+        <div class="flex flex-row items-center m-2 h-10">
+            <p>streak: &nbsp;</p> 
+            <!-- <div class="flex flex-row items-center border text-sm"> -->
+                <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
+            <!-- </div> -->
+            <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
+            <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
+        </div>
+        <button type="button" onclick="location.href=`{% url 'frontend:math_arithmetic' %}`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        Play
+      </button>
+        
+    </div>
+    
+    <div class="flex flex-col m-4 items-center ">
+      <button type="button" onclick="location.href=`{% url 'frontend:index' %}`;"
+          class="bg-slate-300 rounded-lg text-center w-full h-10">
+        Back
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<!-- <script>
+    const l1_thr = {{ l1_thr }};
+    const l2_thr = {{ l2_thr }};
+    const l3_thr = {{ l3_thr }};
+</script> -->
+<!-- <script type="text/javascript" src="{% static 'frontend/js/math.js' %}"></script> -->
+{% endblock %}
