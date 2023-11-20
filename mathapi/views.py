@@ -1,4 +1,3 @@
-import imp
 from math import ceil, floor
 import random
 
@@ -80,7 +79,8 @@ def levelRandomQuestion(request):
     req_data = request.data
     diff =req_data['level']
     print(f"in levelRandomQuestion: diff: {diff}")
-    question_list = Question.objects.filter(difficulty=diff)
+    # question_list = Question.objects.filter(difficulty=diff)
+    question_list = Question.objects.filter(difficulty=3)
     question = random.choice(question_list)
     serializer = QuestionSerializer(question, many=False)
     return JsonResponse(serializer.data)
@@ -141,7 +141,6 @@ def updateCoins(request, pk):
             "updated" : True
         }
     else:
-        print ("OOPS!!!")
         response = {
             "updated" : False
         }
@@ -246,10 +245,12 @@ def updateInventory(request, pk):
             inventory_obj.tier3 = inventory_obj.tier3 + tier['t3']
             inventory_obj.tier2 = inventory_obj.tier2 + tier['t2']
             inventory_obj.tier1 = inventory_obj.tier1 + tier['t1']
+            inventory_obj.coins = inventory_obj.coins + tier['t']
             lt_inventory_obj.tier4 = lt_inventory_obj.tier4 + tier['t4']
             lt_inventory_obj.tier3 = lt_inventory_obj.tier3 + tier['t3']
             lt_inventory_obj.tier2 = lt_inventory_obj.tier2 + tier['t2']
             lt_inventory_obj.tier1 = lt_inventory_obj.tier1 + tier['t1']
+            lt_inventory_obj.coins = lt_inventory_obj.coins + tier['t']
             
             # pass has to be increased no matter what depending of the val in request data, since it sends 0 
             # in no update is needed
@@ -276,6 +277,8 @@ def updateInventory(request, pk):
             response['pb2'] = inventory_obj.tier2
             response['pb3'] = inventory_obj.tier3
             response['pb4'] = inventory_obj.tier4
+            response['coin'] = inventory_obj.coins
+            response['comp'] = inventory_obj.trapModules
             response['passes'] = inventory_obj.passes
             response['lt_pb1'] = lt_inventory_obj.tier1
             response['lt_pb2'] = lt_inventory_obj.tier2
