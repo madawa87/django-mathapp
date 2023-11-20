@@ -14,7 +14,7 @@
     <!-- custom css -->
     <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/main.css' %}">
 
-    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <!-- app specific css -->
     {% block app-spec-css %}
     {% endblock %}
@@ -29,6 +29,10 @@
 
     {% block footer-block %}
     {% endblock %}
+
+    <button hx-get="{% url 'frontend:math' %}" hx-swap="outerHTML">
+        Click Me
+    </button>
 
     <!-- page specific javascript -->
     {% block page-spec-js %} {% endblock %}

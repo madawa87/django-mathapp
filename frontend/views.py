@@ -70,12 +70,6 @@ def math_view(request):
 
 
 @login_required
-def math_question_view(request):
-    context = get_common_context(request.user)
-    print ("math_view context: {}".format(context))
-    return render(request, 'frontend/math.html', context)
-
-@login_required
 def math_arithmetic_view(request):
     context = get_common_context(request.user)
     # math reward tier thresholds
@@ -95,6 +89,11 @@ def match_view(request):
     print ("match_view context: {}".format(context))
     return render(request, 'frontend/match.html', context)
 
+@login_required
+def shop_view(request):
+    context = get_common_context(request.user)
+    print ("match_view context: {}".format(context))
+    return render(request, 'frontend/shop.html', context)
 
 @login_required
 def game_view(request):
