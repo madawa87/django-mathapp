@@ -31,11 +31,18 @@ modal_button.addEventListener('click', function (ev) {
 
 // populate math-equn
 let equn = document.getElementById('math-eqn');
+let equn_p = document.getElementById('math-eqn-p');
 let ans = document.getElementById('correct-answer');
 let input_answer = document.getElementById('answer');
+let q_type_p = document.getElementById('q-type-p');
 let q_id = 0
 
 // streak values
+const component_streak_default = 10;
+let component_streak = component_streak_default;
+const component_streak_p = document.getElementById('component-prog-p');
+const component_streak_div = document.getElementById('component-prog-div');
+
 let dive_streak = 0;
 let ultra_streak = 0;
 let master_streak = 0;
@@ -43,6 +50,7 @@ let master_streak = 0;
 let difficulty_level = 1;
 
 function clearStreaks() {
+    component_streak = component_streak_default;
     dive_streak = 0;
     ultra_streak = 0;
     master_streak = 0;
@@ -84,15 +92,15 @@ function populateEquationDB() {
 
             equn.innerText = '' + data['operand1'] + ' ' + data['operator'] + ' ' + data['operand2'];
             ans.innerText = data['answer'];
+            q_type_p.innerHTML = data['type']
             q_id = data['id']
         });
-    input_answer.value = '';
-    // generateEquation();
-}
+        input_answer.value = '';
+        // generateEquation();
+    }
 
 function populateLvlEquationDB() {
     let url = 'http://127.0.0.1:8000/api/levelRandomQuestion/';
-
     fetch(url, {
         method: 'POST',
         headers: {
@@ -105,8 +113,12 @@ function populateLvlEquationDB() {
         .then((resp) => resp.json())
         .then((data) => {
             console.log(data)
+            if (data['ans_method'] == 'MCQ') {
+                
+            }
             equn.innerText = '' + data['operand1'] + ' ' + data['operator'] + ' ' + data['operand2'];
             ans.innerText = data['answer'];
+            q_type_p.innerHTML = data['type']
             q_id = data['id']
         });
     input_answer.value = '';
@@ -123,18 +135,22 @@ const TR3_THRESHOLD = l3_thr;
 
 const REMAINING_TIME_COLOR_CODES = {
     l1: {
+        reward: 'x 1',
         color: "bg-red-500",
-        threshold: l1_thr
+        threshold: l1_thr,
     },
     l2: {
+        reward: 'x 2',
         color: "bg-orange-500",
-        threshold: l2_thr
+        threshold: l2_thr,
     },
     l3: {
+        reward: 'x 3',
         color: "bg-yellow-400",
         threshold: l3_thr
     },
     l4: {
+        reward: 'x 4',
         color: "bg-green-500",
         threshold: l4_thr
     }
@@ -175,24 +191,29 @@ function setRemainingTimeDivColor(timeLeft) {
     const { l4, l3, l2, l1 } = REMAINING_TIME_COLOR_CODES;
     target_div = document.getElementById("time-left-div");
     target_img = document.getElementById("reward_image");
+    target_reward = document.getElementById("reward_coins");
     console.log(target_img.src);
     
     if (timeLeft >= l4.threshold) {
         target_div.classList.remove(l1.color);
         target_div.classList.add(l4.color);
-        target_img.src = pb_4_src;
+        target_reward.innerHTML = l4.reward
+        // target_img.src = pb_4_src;
     } else if (timeLeft >= l3.threshold) {
         target_div.classList.remove(l4.color);
         target_div.classList.add(l3.color);
-        target_img.src = pb_3_src;
+        target_reward.innerHTML = l3.reward
+        // target_img.src = pb_3_src;
     } else if (timeLeft >= l2.threshold) {
         target_div.classList.remove(l3.color);
         target_div.classList.add(l2.color);
-        target_img.src = pb_2_src;
+        target_reward.innerHTML = l2.reward
+        // target_img.src = pb_2_src;
     } else{
         target_div.classList.remove(l2.color);
         target_div.classList.add(l1.color);
-        target_img.src = pb_1_src;
+        target_reward.innerHTML = l1.reward
+        // target_img.src = pb_1_src;
     }
 }
 
@@ -333,6 +354,8 @@ function updateInventory(inc_bool, pass_inc) {
             document.getElementById("pk-b2").innerText = data['pb2'];
             document.getElementById("pk-b3").innerText = data['pb3'];
             document.getElementById("pk-b4").innerText = data['pb4'];
+            document.getElementById("coin1").innerText = data['coin'];
+            document.getElementById("comp1").innerText = data['comp'];
             document.getElementById("passes-span-lf").innerText = data['lt_passes'];
             // console.log("new coins = " + data['coins']);
         }
@@ -348,6 +371,12 @@ let mb_streak_span = document.getElementById('mb-streak');
 let passes_span = document.getElementById('passes-span');
 
 function updateStreak(is_correct) {
+    if (is_correct) {
+        component_streak = component_streak + 2;
+        component_streak_p.innerHTML = component_streak;
+        component_streak_div.style.width = `${component_streak}%`
+    }
+
     pass_inc = 0;
     if (is_correct && timeLeft > 5) {
         dive_streak ++;

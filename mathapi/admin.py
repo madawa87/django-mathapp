@@ -13,10 +13,10 @@ class CoinAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('operator', 'operand1', 'operand2', 'answer', 'q_string', 
-              'difficulty', 'type')
+              'difficulty', 'type', 'ans_method', 'other_answers')
     list_display = ('operator', 'operand1', 'operand2', 'answer', 'q_string', 
-                    'difficulty', 'type')
-    list_filter = ('operator', 'answer', 'q_string', 'difficulty', 'type')
+                    'difficulty', 'type', 'ans_method')
+    list_filter = ('operator', 'answer', 'q_string', 'difficulty', 'type', 'ans_method')
 
 class PokeballsAdmin(admin.ModelAdmin):
     fields = ('user', 'tier1', 'tier2', 'tier3', 'tier4')

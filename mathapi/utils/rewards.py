@@ -16,14 +16,18 @@ class MathReward:
 
 
     def get_reward_tier(self, time_left):
-        rew = {'t1' : 0, 't2' : 0, 't3' : 0, 't4' : 0}
+        rew = {'t1' : 0, 't2' : 0, 't3' : 0, 't4' : 0, 't' : 0}
 
         if time_left >= self.reward_threshold['t4']:
             rew['t4'] = 1
+            rew['t'] = 4
         elif time_left >= self.reward_threshold['t3']:
             rew['t3'] = 1
+            rew['t'] = 3
         elif time_left >= self.reward_threshold['t2']:
             rew['t2'] = 1
+            rew['t'] = 2
         elif time_left > self.reward_threshold['t1']:
             rew['t1'] = 1
+            rew['t'] = 1
         return rew
