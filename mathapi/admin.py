@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Coins
-from .models import Question
+from .models import Question, MCQuestion
 from .models import Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory
 
 # Register your models here.
@@ -17,6 +17,11 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('operator', 'operand1', 'operand2', 'answer', 'q_string', 
                     'difficulty', 'type', 'ans_method')
     list_filter = ('operator', 'answer', 'q_string', 'difficulty', 'type', 'ans_method')
+
+class MCQuestionAdmin(admin.ModelAdmin):
+    fields = ('question', 'choices', 'difficulty', 'type')
+    list_display = ('question', 'choices', 'difficulty', 'type')
+    list_filter = ('difficulty', 'type')
 
 class PokeballsAdmin(admin.ModelAdmin):
     fields = ('user', 'tier1', 'tier2', 'tier3', 'tier4')
@@ -40,6 +45,7 @@ class LifetimeInventoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Coins, CoinAdmin)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(Pokeballs, PokeballsAdmin)
 admin.site.register(LifetimePokeballs, LifetimePokeballsAdmin)
 admin.site.register(Inventory, InventoryAdmin)

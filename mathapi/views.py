@@ -12,8 +12,8 @@ from rest_framework.reverse import reverse
 from rest_framework import permissions, status
 
 from mathapi import serializers
-from mathapi.serializers import QuestionSerializer, StatSerializer
-from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory, Question, Stats
+from mathapi.serializers import QuestionSerializer, MCQSerializer, StatSerializer, MCQSerializerShuffled
+from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory, Question, MCQuestion, Stats
 from mathapi.utils.rewards import MathReward
 
 from django.views.decorators.csrf import csrf_exempt
@@ -25,6 +25,37 @@ def api_root(request, fromat=None):
         'stats': reverse('stat-list', request=request, format=format)
         }
     )
+
+class MCQuestionList(generics.ListCreateAPIView):
+    queryset = MCQuestion.objects.all()
+    serializer_class = MCQSerializer
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.save()
+            print("DONE perform creating MCQ")
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print("COULD NOT perform create MCQ")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def create(self, request, *args, **kwargs):
+        serialzr = self.serializer_class(data=request.data)
+        if serialzr.is_valid():
+            print("Creating MCQ: {}".format(request.data))
+            serialzr.save()
+            return Response(serialzr.data, status=status.HTTP_201_CREATED)
+        else:
+            print("Could not create MCQ: {}".format(request.data))
+            return Response(serialzr.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MCQuestionDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = MCQuestion.objects.all()
+    serializer_class = MCQSerializer
 
 class QuestionList(generics.ListCreateAPIView):
     queryset = Question.objects.all()
@@ -48,19 +79,19 @@ class QuestionList(generics.ListCreateAPIView):
             serialzr.save()
             return Response(serialzr.data, status=status.HTTP_201_CREATED)
         else:
-            print("Could not creating: {}".format(request.data))
+            print("Could not create: {}".format(request.data))
             return Response(serialzr.errors, status=status.HTTP_400_BAD_REQUEST)
             
-
-class StatList(generics.ListAPIView):
-    queryset = Stats.objects.all()
-    serializer_class = StatSerializer
 
 class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
+
+class StatList(generics.ListAPIView):
+    queryset = Stats.objects.all()
+    serializer_class = StatSerializer
 
 def default_view(request):
     return HttpResponse('<h1>API Home!!</h1>')
@@ -71,8 +102,8 @@ def randomQuestion(request):
     question_list = list(Question.objects.all())
     question = random.choice(question_list)
     serializer = QuestionSerializer(question, many=False)
-    return JsonResponse(serializer.data)
-    
+    return JsonResponse(serializer.data)    
+
 @api_view(['POST'])
 def levelRandomQuestion(request):
     random.seed()
@@ -84,6 +115,48 @@ def levelRandomQuestion(request):
     question = random.choice(question_list)
     serializer = QuestionSerializer(question, many=False)
     return JsonResponse(serializer.data)
+
+@api_view(['POST'])
+def levelRandomMCQ(request):
+    random.seed()
+    diff = request.data['level']
+    print(f"in levelRandomMCQ: diff: {diff}")
+    question_list = list(MCQuestion.objects.filter(difficulty=diff))
+    question = random.choice(question_list)
+    serializer = MCQSerializer(question, many=False)
+    return JsonResponse(serializer.data)
+
+@api_view(['POST'])
+def getLevelRandomMCQ(request):
+    random.seed()
+    diff = request.data['level']
+    print(f"in levelRandomMCQ: diff: {diff}")
+    question_list = list(MCQuestion.objects.filter(difficulty=diff))
+    question = random.choice(question_list)
+    serializer = MCQSerializerShuffled(question, many=False)
+    return JsonResponse(serializer.data)
+
+@api_view(['POST'])
+def checkMCQAnswer(request, pk):
+    data = request.data
+    user = request.user
+
+    mcq = MCQuestion.objects.get(id=pk)
+    print(f"mcq ID: {pk}")
+    print(f"mcq: {mcq}")
+    print(f"choice: {data['choice']}")
+
+    correct_choice = mcq.choices.split(',')[0].strip()
+    print(f"correct_choice: {correct_choice}")
+    if data['choice'] == correct_choice:
+        response = {
+            "correct": True
+        }
+    else:
+        response = {
+            "correct": False
+        }
+    return JsonResponse(response)
 
 @api_view(['POST'])
 def checkAnswer(request, pk):

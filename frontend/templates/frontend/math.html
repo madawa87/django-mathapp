@@ -16,13 +16,8 @@
       <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
         Arithmatic
       </div>
-        <div class="flex flex-row items-center m-2 h-10">
-            <p>streak: &nbsp;</p> 
-            <!-- <div class="flex flex-row items-center border text-sm"> -->
-                <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
-            <!-- </div> -->
-            <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
-            <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
+        <div class="flex flex-row items-center m-2">
+            <p class="">Find answers to math equations of adding, subtraction, multiplication and divition. Dificulty of equations will change depending how you answer them. &nbsp;</p> 
         </div>
         <button type="button" onclick="location.href=`{% url 'frontend:math_arithmetic' %}`;"
         class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
@@ -30,6 +25,22 @@
       </button>
         
     </div>
+
+    <!-- mutiple choice questions -->
+    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Word questions
+      </div>
+        <div class="flex flex-row items-center m-2">
+            <p class="">Pick the correct answer for math problems. &nbsp;</p> 
+        </div>
+        <button type="button" onclick="location.href=`{% url 'frontend:math_mcq' %}`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        Play
+      </button>
+        
+    </div>
+
     <!-- rounding -->
     <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
       <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">

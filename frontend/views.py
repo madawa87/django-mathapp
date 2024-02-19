@@ -83,6 +83,22 @@ def math_arithmetic_view(request):
                   'frontend/math_arithmetic.html', 
                   context)
 
+
+@login_required
+def math_mcq_view(request):
+    context = get_common_context(request.user)
+    # math reward tier thresholds
+    rew_obj = MathReward()
+    context['l4_thr'] = rew_obj.reward_threshold['t4']
+    context['l3_thr'] = rew_obj.reward_threshold['t3']
+    context['l2_thr'] = rew_obj.reward_threshold['t2']
+    context['l1_thr'] = rew_obj.reward_threshold['t1']
+    print ("++++math_mcq_view context: {}".format(context))
+    return render(request, 
+                  'frontend/math_mcq.html', 
+                  context)
+
+
 @login_required
 def match_view(request):
     context = get_common_context(request.user)

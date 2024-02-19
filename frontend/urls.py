@@ -15,8 +15,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), 
          {'nextpage': 'frontend:login'}, name='logout'),
     path('math_arithmetic/', views.math_arithmetic_view, 
-         name='math_arithmetic')
-
+         name='math_arithmetic'),
+    path('math_mcq/', views.math_mcq_view, name='math_mcq')
 ]
 
 htmx_urlpatterns = [

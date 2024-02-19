@@ -13,16 +13,45 @@ class Question(models.Model):
         DIVIDE = "DIV", _("Division")
         EQ_ANSWER = "EQ_A", _("Find answer to the equation")
         EQ_MISSING = "EQ_M", _("Find missing value of the equation")
+        MCQ = "MCQ", _("Select correct answer")
+
+    class AnswerMethod(models.TextChoices):
+        TYPE = "TYPE", _("Type answer and press enter")
+        SELECT = "SELC", _("Select the correct answer")
 
     operator = models.CharField(max_length=1)
     operand1 = models.IntegerField()
     operand2 = models.IntegerField()
-    q_string = models.CharField(max_length=128, default='')
+    q_string = models.CharField(max_length=128, default='', null=True, 
+                                blank=True)
 
     answer = models.IntegerField()
+    other_answers = models.JSONField(default=dict(ans=[]))
     difficulty = models.IntegerField(default=1)
     type = models.CharField(max_length=4, choices=QuestionType.choices,
                             default=QuestionType.EQ_ANSWER)
+    ans_method = models.CharField(max_length=4, choices=AnswerMethod.choices,
+                                  default=AnswerMethod.TYPE)
+
+
+class MCQuestion(models.Model):
+    class Category(models.TextChoices):
+        MATH = "MATH", "Math question"
+        SCIENCE = "SC", "Science question"
+        GENERAL = "GK", "General knowledge"
+        IQ = "IQ", "IQ question"
+
+    question = models.CharField(max_length=512)
+    # choices are comma seperated str. first choice is always the 
+    # correct answer
+    choices = models.CharField(max_length=256)
+    difficulty = models.IntegerField(default=1)
+    type = models.CharField(max_length=4, choices=Category.choices)
+
+class UserStats(models.Model):
+    user =models.OneToOneField('auth.User', related_name='user_stat',
+                               on_delete=models.CASCADE)
+    current_difficulty = models.IntegerField(default=1) 
 
 
 class Stats(models.Model):
