@@ -25,7 +25,7 @@
               </div>
                 
                 <div class="flex my-4 items-center h-14">
-                    <input id="answer" class="mx-4 block w-full px-3 py-2 h-10 shadow-l
+                    <input id="answer-input" class="mx-4 block w-full px-3 py-2 h-10 shadow-l
                             bg-indigo-100 border border-slate-300 rounded-lg placeholder-slate-400
                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-xl text-center font-medium"
                             type="number" name="answer" placeholder="Answer" 
@@ -182,5 +182,6 @@
     const l3_thr = {{ l3_thr }};
     const l4_thr = {{ l4_thr }};
 </script>
-<script type="text/javascript" src="{% static 'frontend/js/math.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'frontend/js/modules.math_base.js' %}"></script> -->
+<script type="module" src="{% static 'frontend/js/math-arith.js' %}"></script>
 {% endblock %}

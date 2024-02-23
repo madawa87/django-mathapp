@@ -35,7 +35,6 @@ function checkChoice(id, ans) {
                 pass_inc = updateStreak(false);
                 updateInventory(false, pass_inc);
             }
-
         });
 }
 
