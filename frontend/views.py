@@ -80,7 +80,7 @@ def math_arithmetic_view(request):
     context['l1_thr'] = rew_obj.reward_threshold['t1']
     print ("++++math_arithmetic_view context: {}".format(context))
     return render(request, 
-                  'frontend/math_arithmetic.html', 
+                  'frontend/math-arithmetic.html', 
                   context)
 
 
@@ -95,7 +95,7 @@ def math_mcq_view(request):
     context['l1_thr'] = rew_obj.reward_threshold['t1']
     print ("++++math_mcq_view context: {}".format(context))
     return render(request, 
-                  'frontend/math_mcq.html', 
+                  'frontend/math-mcq.html', 
                   context)
 
 
