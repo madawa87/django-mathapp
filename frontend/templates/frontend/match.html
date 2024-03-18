@@ -35,6 +35,13 @@
             <img id="reward_image" src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-3 mx-1">
         </div>
     </div>
+
+    <div class="flex flex-col m-4 items-center ">
+        <button type="button" onclick="location.href=`{% url 'frontend:index' %}`;"
+            class="bg-slate-300 rounded-lg text-center w-full h-10">
+          Back
+        </button>
+    </div>
 </div>
 {% endblock %}
 

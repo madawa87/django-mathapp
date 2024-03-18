@@ -89,10 +89,10 @@ def math_mcq_view(request):
     context = get_common_context(request.user)
     # math reward tier thresholds
     rew_obj = MathReward()
-    context['l4_thr'] = rew_obj.reward_threshold['t4']
-    context['l3_thr'] = rew_obj.reward_threshold['t3']
-    context['l2_thr'] = rew_obj.reward_threshold['t2']
-    context['l1_thr'] = rew_obj.reward_threshold['t1']
+    context['l4_threshold'] = rew_obj.reward_threshold['t4']
+    context['l3_threshold'] = rew_obj.reward_threshold['t3']
+    context['l2_threshold'] = rew_obj.reward_threshold['t2']
+    context['l1_threshold'] = rew_obj.reward_threshold['t1']
     print ("++++math_mcq_view context: {}".format(context))
     return render(request, 
                   'frontend/math-mcq.html', 
