@@ -96,3 +96,4 @@ function populateLvlMCQDB() {
 }
 
 populateLvlMCQDB();
+startTimer();
