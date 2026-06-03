@@ -1,6 +1,8 @@
 // initial pokeballs
 let pk_balls = 10
 
+console.log("🇱🇰");
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -21,16 +23,29 @@ const csrftoken = getCookie('csrftoken');
 ////////////////////////////////////////////////////////
 const app_div = document.getElementById('match-app');
 const reward_div = document.getElementById('reward-meter-div');
+const emoji_name_span = document.getElementById('emoji-name-span');
 const reward_pb_img = document.getElementById('reward_image');
 
-const n_row = 6;
-const n_col = 5;
+// const n_row = 8;
+// const n_col = 5;
+// const n_row = 6;
+// const n_col = 5;
+const match_data = JSON.parse(
+    document.getElementById("match-data").textContent
+);
+var n_row = match_data.n_row;
+var n_col = match_data.n_col;
+if (n_row > 11) {n_row = 10};
+if (n_col > 7) {n_col = 6};
+
+console.log("shape:", n_row, n_col)
 
 const n_boxes = n_row*n_col;
 const n_numbers = 0.5*n_boxes;
 let reward_bar_width = 100;
 const click_pen = (100-50)/n_boxes;
 var puzzle_numbers = [];
+var puzzle_symbols = [];
 var puzzle_boxes = [];
 var box_map = new Map();
 var flipped_box_id = null;
@@ -76,7 +91,32 @@ function updateRewards() {
     }
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
+
+function getRandomEmojies(em_arr, n) {
+    const shuffled_emo = [...em_arr];
+
+    for (let i = shuffled_emo.length-1; i>0; i--) {
+        const j = Math.floor(Math.random() * (i+1));
+        [shuffled_emo[i], shuffled_emo[j]] = [shuffled_emo[j], shuffled_emo[i]];
+    }
+
+    return shuffled_emo.slice(0, n);
+}
+
+window.addEventListener('DOMContentLoaded', async (event) => {
+    // load emoji
+    const response = await fetch("http://127.0.0.1:8000/api/emojiCategories/");
+    const categories = await response.json();
+
+    const emoji_pool = categories.flag;
+    const selected_emoji_set  =getRandomEmojies(emoji_pool, n_numbers);
+    console.log(selected_emoji_set);
+
+    selected_emoji_set.forEach(element => {
+        console.log(element.emoji)
+    });
+    
+
     // create rows of boxes, set id and class
     for(i=0; i<n_row; i++) {
         let rowid = 'row'+i;
@@ -88,7 +128,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             rowitem = document.createElement('div');
             rowitem.setAttribute('id', boxid);
             rowitem.innerHTML = i + ', ' + j
-            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-r from-purple-300 to-indigo-300 hover:from-indigo-300 hover:to-purple-300');
+            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-r from-purple-300 to-indigo-300 hover:from-indigo-300 hover:to-purple-300 text-2xl font-medium');
             row_div.appendChild(rowitem);
             puzzle_boxes.push(boxid);
         }
@@ -101,24 +141,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
         .map(({ value }) => value);
     // alert(shuffled_puzzle_boxes);
 
-    // set box numbers, and box_map
-    for (i=0; i<n_numbers; i++){
-        let its_in = true, n;
-        while(its_in){
-            n = Math.floor(Math.random() * 100);
-            its_in = puzzle_numbers.includes(n);
-        }
-        puzzle_numbers.push(n);
-        let b1_id = shuffled_puzzle_boxes.pop();
-        let b2_id = shuffled_puzzle_boxes.pop();
+    // set box emoji and box_map
+    for (let i=0; i<n_numbers; i++) {
+        const emoji = selected_emoji_set.pop();
+        const b1_id = shuffled_puzzle_boxes.pop();
+        const b2_id = shuffled_puzzle_boxes.pop();
+        // document.getElementById(b1_id).innerHTML = emoji.emoji;
+        // document.getElementById(b2_id).innerHTML = emoji.emoji;
         document.getElementById(b1_id).innerHTML = '';
         document.getElementById(b2_id).innerHTML = '';
 
-        box_map.set(b1_id, n);
-        box_map.set(b2_id, n);
+        box_map.set(b1_id, emoji);
+        box_map.set(b2_id, emoji);
     }
 
-    for (const [bid, n] of box_map.entries()) {
+    
+    for (const [bid, emo] of box_map.entries()) {
         document.getElementById(bid).addEventListener('click', (ev) => {
             if (click_disabled) {
                 return;
@@ -135,23 +173,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
             updateRewards();
-            ev.target.innerHTML = n;
-
+            ev.target.innerHTML = emo.emoji;
+            emoji_name_span.innerHTML =  emo.id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            console.log(emo.id);
+            
             if (flipped_box_id == null) {
                 flipped_box_id = bid;
                 return;
             }
             
             let f_box = document.getElementById(flipped_box_id);
-
-            if (n == f_box.innerHTML) {
+            
+            if (emo.emoji == f_box.innerHTML) {
                 // alert("hooray!!");
                 reward_bar_width += 3 * click_pen;
                 reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
                 updateRewards();
-
+                
                 flipped_box_id = null;
-                dis_div_classes = 'flex items-center justify-center h-12 w-12 m-2 border-1 border-1 border-slate-600 rounded-lg bg-gradient-to-r from-zinc-200 via-slate-300 to-slate-200 opacity-60';
+                dis_div_classes = 'flex items-center justify-center h-12 w-12 m-2 border-1 border-1 border-slate-600 rounded-lg bg-gradient-to-r from-zinc-200 via-slate-300 to-slate-200 opacity-60 text-xl font-medium';
                 f_box.setAttribute('class', dis_div_classes);
                 ev.target.setAttribute('class',dis_div_classes);
                 f_box.parentElement.replaceChild(f_box.cloneNode(true), f_box);
@@ -159,6 +199,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 click_disabled = 1;
                 setTimeout(function() {
+                    emoji_name_span.innerHTML = '&nbsp;';
                     ev.target.innerHTML = '';
                     f_box.innerHTML = '';
                     flipped_box_id = null;
@@ -167,5 +208,72 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
+
+    // // set box numbers, and box_map
+    // for (i=0; i<n_numbers; i++){
+    //     let its_in = true, n;
+    //     while(its_in){
+    //         n = Math.floor(Math.random() * 100);
+    //         its_in = puzzle_numbers.includes(n);
+    //     }
+    //     puzzle_numbers.push(n);
+    //     let b1_id = shuffled_puzzle_boxes.pop();
+    //     let b2_id = shuffled_puzzle_boxes.pop();
+    //     document.getElementById(b1_id).innerHTML = '';
+    //     document.getElementById(b2_id).innerHTML = '';
+
+    //     box_map.set(b1_id, n);
+    //     box_map.set(b2_id, n);
+    // }
+
+    // for (const [bid, n] of box_map.entries()) {
+    //     document.getElementById(bid).addEventListener('click', (ev) => {
+    //         if (click_disabled) {
+    //             return;
+    //         }
+            
+    //         // prevent clicking the same box triggering a match
+    //         if (flipped_box_id == bid){
+    //             return;
+    //         }
+
+    //         reward_bar_width -= click_pen;
+    //         if (reward_bar_width < 1) {
+    //             reward_bar_width = 1;
+    //         }
+    //         reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
+    //         updateRewards();
+    //         ev.target.innerHTML = n;
+
+    //         if (flipped_box_id == null) {
+    //             flipped_box_id = bid;
+    //             return;
+    //         }
+            
+    //         let f_box = document.getElementById(flipped_box_id);
+
+    //         if (n == f_box.innerHTML) {
+    //             // alert("hooray!!");
+    //             reward_bar_width += 3 * click_pen;
+    //             reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
+    //             updateRewards();
+
+    //             flipped_box_id = null;
+    //             dis_div_classes = 'flex items-center justify-center h-12 w-12 m-2 border-1 border-1 border-slate-600 rounded-lg bg-gradient-to-r from-zinc-200 via-slate-300 to-slate-200 opacity-60';
+    //             f_box.setAttribute('class', dis_div_classes);
+    //             ev.target.setAttribute('class',dis_div_classes);
+    //             f_box.parentElement.replaceChild(f_box.cloneNode(true), f_box);
+    //             ev.target.parentElement.replaceChild(ev.target.cloneNode(true), ev.target);
+    //         } else {
+    //             click_disabled = 1;
+    //             setTimeout(function() {
+    //                 ev.target.innerHTML = '';
+    //                 f_box.innerHTML = '';
+    //                 flipped_box_id = null;
+    //                 click_disabled = 0;
+    //             }, 1000);
+    //         }
+    //     });
+    // }
 });
     

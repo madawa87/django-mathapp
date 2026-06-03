@@ -51,7 +51,13 @@ class MCQuestion(models.Model):
 class UserStats(models.Model):
     user =models.OneToOneField('auth.User', related_name='user_stat',
                                on_delete=models.CASCADE)
-    current_difficulty = models.IntegerField(default=1) 
+    current_difficulty = models.IntegerField(default=1)
+
+class UserSetting(models.Model):
+    user = models.OneToOneField('auth.User', related_name='user_setting',
+                                on_delete=models.CASCADE)
+    mathArithmaticDiff = models.IntegerField('Math Arithmatic difficulty to start', default=1)
+    mathWordProblemDiff = models.IntegerField('Math word problem difficulty to start', default=1)
 
 
 class Stats(models.Model):

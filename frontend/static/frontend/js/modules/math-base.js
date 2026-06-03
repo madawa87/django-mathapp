@@ -38,6 +38,9 @@ let dive_streak = 0;
 let ultra_streak = 0;
 let master_streak = 0;
 
+let current_difficulty = 1;
+let current_difficulty_streak = 0;
+
 function clearStreaks() {
     component_streak = component_streak_default;
     dive_streak = 0;

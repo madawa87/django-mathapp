@@ -1,5 +1,7 @@
 from math import ceil, floor
 import random
+from pathlib import Path
+import json
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -97,6 +99,18 @@ def default_view(request):
     return HttpResponse('<h1>API Home!!</h1>')
 
 @api_view(['GET'])
+def emoji_categories(request):
+    random.seed()
+    question_list = list(Question.objects.all())
+    print(f"_______PWD {Path.cwd()}")
+    with open ("frontend/static/frontend/json/country_flags.json", "r", encoding="utf-8") as emoji:
+        data = json.load(emoji)
+        return JsonResponse(data) 
+    # question = random.choice(question_list)
+    # serializer = QuestionSerializer(question, many=False)
+    # return JsonResponse(serializer.data) 
+
+@api_view(['GET'])
 def randomQuestion(request):
     random.seed()
     question_list = list(Question.objects.all())
@@ -111,7 +125,7 @@ def levelRandomQuestion(request):
     diff =req_data['level']
     print(f"in levelRandomQuestion: diff: {diff}")
     # question_list = Question.objects.filter(difficulty=diff)
-    question_list = Question.objects.filter(difficulty=3)
+    question_list = Question.objects.filter(difficulty=diff)
     question = random.choice(question_list)
     serializer = QuestionSerializer(question, many=False)
     return JsonResponse(serializer.data)
@@ -130,8 +144,9 @@ def levelRandomMCQ(request):
 def getLevelRandomMCQ(request):
     random.seed()
     diff = request.data['level']
-    print(f"in levelRandomMCQ: diff: {diff}")
-    question_list = list(MCQuestion.objects.filter(difficulty=diff))
+    print(f"in getLevelRandomMCQ: diff: {diff}")
+    # question_list = list(MCQuestion.objects.filter(difficulty=diff))
+    question_list = list(MCQuestion.objects.filter(difficulty=4))
     question = random.choice(question_list)
     serializer = MCQSerializerShuffled(question, many=False)
     return JsonResponse(serializer.data)

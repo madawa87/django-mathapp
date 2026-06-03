@@ -97,6 +97,7 @@ answerInput.focus();
 
 function checkAnswer() {
     let url = `http://127.0.0.1:8000/api/questions/${q_id}/checkAnswer/`;
+    let given_answer = answerInput.value;
     fetch(url, {
         method: 'POST',
         headers: {
@@ -104,7 +105,7 @@ function checkAnswer() {
             'X-CSRFToken': csrftoken
         },
         body: JSON.stringify({
-            answer: answerInput.value,
+            answer: given_answer,
             time_left: timer.timeLeft
         })
     }).then(res => {
@@ -114,9 +115,11 @@ function checkAnswer() {
         if (data['correct']) {
             // answer is corrrect
             console.log("correct");
+            setModal(true, given_answer);
         }
         else {
             // answer is wrong
+            setModal(false, given_answer);
             console.log("wrong answer");
         }
     });
