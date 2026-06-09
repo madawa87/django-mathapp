@@ -146,7 +146,8 @@ def getLevelRandomMCQ(request):
     diff = request.data['level']
     print(f"in getLevelRandomMCQ: diff: {diff}")
     # question_list = list(MCQuestion.objects.filter(difficulty=diff))
-    question_list = list(MCQuestion.objects.filter(difficulty=4))
+    # question_list = list(MCQuestion.objects.filter(difficulty=4))
+    question_list = list(MCQuestion.objects.all())
     question = random.choice(question_list)
     serializer = MCQSerializerShuffled(question, many=False)
     return JsonResponse(serializer.data)
