@@ -1,0 +1,90 @@
+{% extends "frontend/index.html" %}
+
+<!-- need to load static files if use them within this file -->
+{% load static %}
+
+{% block app-spec-css %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/home.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/math.css' %}">
+{% endblock %}
+
+{% block main-app %}
+<div class="max-w-md mx-auto my-2 bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div id="swap-contianer" >
+    <!-- arithmatic -->
+    <!-- <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Arithmatic
+      </div>
+        <div class="flex flex-row items-center m-2">
+            <p class="">Find answers to math equations of adding, subtraction, multiplication and divition. Dificulty of equations will change depending how you answer them. &nbsp;</p> 
+        </div>
+        <button type="button" onclick="location.href=`{% url 'frontend:math_arithmetic' %}`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        Play
+      </button>
+        
+    </div> -->
+
+
+    <!-- select match grid size -->
+    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Select the grid size
+      </div>
+        <div class="flex flex-row items-center m-2">
+            <p class="">Pick the grid size of the number matching game you would like to play. &nbsp;</p> 
+        </div>
+        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=4&n_col=4`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        4 X 4
+      </button>
+        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=6&n_col=4`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        6 X 4
+      </button>
+        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=8&n_col=5`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        8 X 5
+      </button>
+      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
+        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+        10 X 6
+      </button>
+        
+    </div>
+
+    <!-- rounding -->
+    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        Rounding
+      </div>
+        <div class="flex flex-row items-center m-2 h-10">
+            <p>streak: &nbsp;</p> 
+            <!-- <div class="flex flex-row items-center border text-sm"> -->
+                <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
+            <!-- </div> -->
+            <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
+            <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
+        </div>
+        
+    </div>
+    <div class="flex flex-col m-4 items-center ">
+      <button type="button" onclick="location.href=`{% url 'frontend:index' %}`;"
+          class="bg-slate-300 rounded-lg text-center w-full h-10">
+        Back
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block app-spec-js %}
+<!-- <script>
+    const l1_thr = {{ l1_thr }};
+    const l2_thr = {{ l2_thr }};
+    const l3_thr = {{ l3_thr }};
+</script> -->
+<!-- <script type="text/javascript" src="{% static 'frontend/js/math.js' %}"></script> -->
+{% endblock %}

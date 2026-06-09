@@ -14,6 +14,8 @@ urlpatterns = [
     path('randomQuestion/', views.randomQuestion, name='api-randomQuestion'),
     path('levelRandomQuestion/', views.levelRandomQuestion, name='api-levelRandomQuestion'),
 
+    path('emojiCategories/', views.emoji_categories, name='api-emojiCategories'),
+
     path('mcquestions/', views.MCQuestionList.as_view(), name='mcquestion-list'),
     path('mcquestions/<int:pk>/', views.MCQuestionDetail.as_view(), name='mcquestion-detail'),
     path('mcquestions/<int:pk>/checkMCQChoice/', views.checkMCQAnswer, name='api-MCQCheckAnswer'),

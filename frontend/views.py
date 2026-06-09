@@ -98,10 +98,19 @@ def math_mcq_view(request):
                   'frontend/math-mcq.html', 
                   context)
 
+@login_required
+def match_setup_view(request):
+    context = get_common_context(request.user)
+    print ("match_view context: {}".format(context))
+    return render(request, 'frontend/match-setup.html', context)
 
 @login_required
 def match_view(request):
     context = get_common_context(request.user)
+    context["match_data"] = {
+        "n_row" : request.GET.get('n_row'),
+        "n_col" : request.GET.get('n_col')
+    }
     print ("match_view context: {}".format(context))
     return render(request, 'frontend/match.html', context)
 

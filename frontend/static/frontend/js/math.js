@@ -425,6 +425,7 @@ modal_sym_svg_path = document.getElementById('sym-svg-path');
 
 
 function set_modal (is_correct) {
+    console.log("setting modal!!")
     const circ_col = "bg-green-200";
     const circ_col_wr = "bg-red-200";
     const svg_stroke = "text-green-600";
