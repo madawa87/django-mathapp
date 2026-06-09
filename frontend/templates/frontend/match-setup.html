@@ -28,51 +28,51 @@
 
 
     <!-- select match grid size -->
-    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
-      <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
-        Select the grid size
+    <div
+      class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl overflow-hidden">
+      <div
+        class="flex items-center justify-center h-16 my-2 mt-0 w-full font-bold text-center text-2xl bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
+        SELECT GRID SIZE
       </div>
-        <div class="flex flex-row items-center m-2">
-            <p class="">Pick the grid size of the number matching game you would like to play. &nbsp;</p> 
-        </div>
-        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=4&n_col=4`;"
-        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+      <div class="flex flex-row items-center text-xl m-2">
+        <p class="">Choose your grid size and start matching! &nbsp;</p>
+      </div>
+      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=4&n_col=4`;"
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-10 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
         4 X 4
       </button>
-        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=6&n_col=4`;"
-        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=6&n_col=4`;"
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-10 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
         6 X 4
       </button>
-        <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=8&n_col=5`;"
-        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=8&n_col=5`;"
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-10 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
         8 X 5
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
-        class="bg-slate-300 rounded-lg text-center h-10 w-24 p-1 m-4 mx-2">
+       class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-10 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
         10 X 6
       </button>
-        
+    
     </div>
 
     <!-- rounding -->
-    <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
+    <!-- <div class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 overflow-hidden">
       <div class="flex items-center justify-center h-8 my-2 mt-0 w-full font-bold text-center bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
         Rounding
       </div>
         <div class="flex flex-row items-center m-2 h-10">
             <p>streak: &nbsp;</p> 
-            <!-- <div class="flex flex-row items-center border text-sm"> -->
                 <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
-            <!-- </div> -->
             <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
             <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
         </div>
-        
-    </div>
+    </div> -->
+
     <div class="flex flex-col m-4 items-center ">
       <button type="button" onclick="location.href=`{% url 'frontend:index' %}`;"
-          class="bg-slate-300 rounded-lg text-center w-full h-10">
-        Back
+          class="bg-slate-300 rounded-full text-blue-950 text-center w-1/2 h-10 text-xl font-bold shadow-sm transition duration-150 transform hover:scale-105">
+        BACK
       </button>
     </div>
   </div>

@@ -6,10 +6,22 @@
     body {
 
         @apply bg-gradient-to-r;
+        @apply from-game-start;
+        @apply from-5%;
+        @apply via-game-mid;
+        @apply via-50%;
+        @apply to-game-start;
+    }
+}
+/* 
+@layer base {
+    body {
+
+        @apply bg-gradient-to-r;
         @apply from-cyan-100;
         @apply from-5%;
         @apply via-sky-300;
         @apply via-50%;
         @apply to-cyan-100;
     }
-}
+} */
