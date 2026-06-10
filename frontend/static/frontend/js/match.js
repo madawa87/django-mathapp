@@ -128,7 +128,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
             rowitem = document.createElement('div');
             rowitem.setAttribute('id', boxid);
             rowitem.innerHTML = i + ', ' + j
-            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-r from-purple-300 to-indigo-300 hover:from-indigo-300 hover:to-purple-300 text-3xl font-medium');
+            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-r from-purple-300 to-indigo-300 hover:from-indigo-300 hover:to-purple-300 text-2xl font-medium');
             row_div.appendChild(rowitem);
             puzzle_boxes.push(boxid);
         }
