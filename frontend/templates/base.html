@@ -30,9 +30,10 @@
     {% block footer-block %}
     {% endblock %}
 
-    <button hx-get="{% url 'frontend:math' %}" hx-swap="outerHTML">
+    <!-- HTMX tag testing!! and this is working -->
+    <!-- <button hx-get="{% url 'frontend:math' %}" hx-swap="outerHTML">
         Click Me
-    </button>
+    </button> -->
 
     <!-- page specific javascript -->
     {% block page-spec-js %} {% endblock %}
