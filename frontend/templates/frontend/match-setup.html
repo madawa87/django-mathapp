@@ -38,22 +38,27 @@
         <p class="">Choose your grid size and start matching! &nbsp;</p>
       </div>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=4&n_col=4`;"
-        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        class="btn-choice-tw-main">
         4 X 4
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=6&n_col=4`;"
-        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        class="btn-choice-tw-main">
         6 X 4
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=8&n_col=5`;"
-        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        class="btn-choice-tw-main">
         8 X 5
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
-       class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        class="btn-choice-tw-main">
         10 X 6
       </button>
-    
+
+<!-- 
+      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
+       class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        10 X 6
+      </button> -->
     </div>
 
     <!-- rounding -->
