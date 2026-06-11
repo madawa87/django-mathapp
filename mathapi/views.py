@@ -34,24 +34,27 @@ class MCQuestionList(generics.ListCreateAPIView):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def perform_create(self, serializer):
-        if serializer.is_valid():
-            serializer.save()
-            print("DONE perform creating MCQ")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            print("COULD NOT perform create MCQ")
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def create(self, request, *args, **kwargs):
-        serialzr = self.serializer_class(data=request.data)
+        serialzr = self.get_serializer(data=request.data)
         if serialzr.is_valid():
-            print("Creating MCQ: {}".format(request.data))
-            serialzr.save()
-            return Response(serialzr.data, status=status.HTTP_201_CREATED)
+            print(f"Creating MCQ: {request.data}")
+            self.perform_create(serialzr)
+            headers = self.get_success_headers(serialzr.data)
+            return Response(serialzr.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            print("Could not create MCQ: {}".format(request.data))
+            print(f"Validation failed, could not create MCQ: {request.data}")
+            print(f"Errors: {serialzr.errors}")
             return Response(serialzr.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # def create(self, request, *args, **kwargs):
+        # serialzr = self.serializer_class(data=request.data)
+        # if serialzr.is_valid():
+        #     print("Creating MCQ: {}".format(request.data))
+        #     serialzr.save()
+        #     return Response(serialzr.data, status=status.HTTP_201_CREATED)
+        # else:
+        #     print("Could not create MCQ: {}".format(request.data))
+        #     return Response(serialzr.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MCQuestionDetail(generics.RetrieveUpdateDestroyAPIView):

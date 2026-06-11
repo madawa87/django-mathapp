@@ -2,7 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
+    body {
+
+        @apply bg-gradient-to-r;
+        @apply from-game-start;
+        @apply from-5%;
+        @apply via-game-mid;
+        @apply via-50%;
+        @apply to-game-start;
+    }
+} */
+
+
+/* @layer base {
     body {
 
         @apply bg-gradient-to-r;
@@ -11,5 +24,42 @@
         @apply via-sky-300;
         @apply via-50%;
         @apply to-cyan-100;
+    }
+} */
+
+@layer components {
+    .body-bg-cyan {
+        @apply bg-gradient-to-r;
+        @apply from-cyan-100;
+        @apply from-5%;
+        @apply via-sky-300;
+        @apply via-50%;
+        @apply to-cyan-100;
+    }
+}
+
+@layer components {
+    .body-bg-cyan-2 {
+        /* 5% to 40% = 35% transition (Left)
+          40% to 60% = Solid Sky-300 (Perfect 50% Center)
+          60% to 95% = 35% transition (Right)
+        */
+        background: linear-gradient(
+            to right, 
+            #ecfeff 5%,    /* cyan-100 start */
+            #9cd2f3 45%,   /* sky-300 solid start */
+            #9cd2f4 50%,   /* sky-300 solid start */
+            #9cd2f3 55%,   /* sky-300 solid end */
+            #ecfeff 95%    /* cyan-100 end */
+        );
+    }
+}
+
+@layer components {
+    .btn-choice-tw-main {
+        @apply bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full;
+        @apply h-14 w-1/2 p-1 m-4 mx-2 space-x-4 shadow-md;
+        @apply text-center text-xl font-bold flex items-center justify-center;
+        @apply transition duration-150 transform hover:scale-105;
     }
 }

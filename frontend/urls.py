@@ -10,6 +10,7 @@ urlpatterns = [
     path('math/', views.math_view, name='math'),
     path('match/', views.match_view, name='match'),
     path('match_setup/', views.match_setup_view, name='match_setup'),
+    path('shop_setup/', views.shop_setup_view, name='shop_setup'),
     path('game/', views.game_view, name='game'),
     path('shop/', views.shop_view, name='shop'),
     path('login/', auth_views.LoginView.as_view(), name='login'),

@@ -105,6 +105,12 @@ def match_setup_view(request):
     return render(request, 'frontend/match-setup.html', context)
 
 @login_required
+def shop_setup_view(request):
+    context = get_common_context(request.user)
+    print ("match_view context: {}".format(context))
+    return render(request, 'frontend/shop-setup.html', context)
+
+@login_required
 def match_view(request):
     context = get_common_context(request.user)
     context["match_data"] = {

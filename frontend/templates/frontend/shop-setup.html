@@ -32,33 +32,28 @@
       class="flex flex-col m-4 items-center bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl overflow-hidden">
       <div
         class="flex items-center justify-center h-16 my-2 mt-0 w-full font-bold text-center text-2xl bg-gradient-to-r from-sky-200 via-cyan-200 to-sky-200">
-        SELECT GRID SIZE
+        SHOP SETUP
       </div>
       <div class="flex flex-row items-center text-xl m-2">
         <p class="">Choose your grid size and start matching! &nbsp;</p>
       </div>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=4&n_col=4`;"
-        class="btn-choice-tw-main">
-        4 X 4
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        Pokeballs
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=6&n_col=4`;"
-        class="btn-choice-tw-main">
-        6 X 4
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        greatballs
       </button>
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=8&n_col=5`;"
-        class="btn-choice-tw-main">
-        8 X 5
+        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
+        ultraballs
       </button>
-      <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
-        class="btn-choice-tw-main">
-        10 X 6
-      </button>
-
-<!-- 
       <button type="button" onclick="location.href=`{% url 'frontend:match' %}?n_row=10&n_col=6`;"
        class="bg-teal-500 hover:bg-teal-600 text-blue-950 rounded-full text-center h-14 w-1/2 p-1 m-4 mx-2 text-xl font-bold flex items-center justify-center space-x-4 shadow-md transition duration-150 transform hover:scale-x-105">
-        10 X 6
-      </button> -->
+        MASTERBALLS
+      </button>
+    
     </div>
 
     <!-- rounding -->
@@ -91,5 +86,5 @@
     const l2_thr = {{ l2_thr }};
     const l3_thr = {{ l3_thr }};
 </script> -->
-<!-- <script type="text/javascript" src="{% static 'frontend/js/math.js' %}"></script> -->
+<script type="text/javascript" src="{% static 'frontend/js/shop.js' %}"></script>
 {% endblock %}

@@ -20,19 +20,20 @@
     {% endblock %}
 
 
-    <title>Django Authentication System - HLAB</title>
+    <title>The Game</title>
 </head>
 
-<body>
+<body class="body-bg-cyan-2">
     {% block content %}
     {% endblock %}
 
     {% block footer-block %}
     {% endblock %}
 
-    <button hx-get="{% url 'frontend:math' %}" hx-swap="outerHTML">
+    <!-- HTMX tag testing!! and this is working -->
+    <!-- <button hx-get="{% url 'frontend:math' %}" hx-swap="outerHTML">
         Click Me
-    </button>
+    </button> -->
 
     <!-- page specific javascript -->
     {% block page-spec-js %} {% endblock %}

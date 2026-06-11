@@ -111,7 +111,8 @@
         </div>
     </div>
 
-    <div class="flex flex-col m-4 py-2 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
+    <!-- components and streak divs -->
+    <!-- <div class="flex flex-col m-4 py-2 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
       <div class="flex flex-row w-full items-start justify-start m-2 my-1 h-8">
           <div class="flex flex-row w-28 items-center my-1 mx-2 text-xs">
               Component
@@ -148,17 +149,14 @@
 
       <div class="flex flex-row items-center m-2 h-10">
           <p>streak: &nbsp;</p> 
-          <!-- <div class="flex flex-row items-center border text-sm"> -->
               <img src="{% static 'frontend/images/pb4-2.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="db-streak">0</span> <p>,</p> &nbsp
-          <!-- </div> -->
           <img src="{% static 'frontend/images/pb4-3.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="ub-streak">0</span> <p>,</p> &nbsp
           <img src="{% static 'frontend/images/pb4-4.png' %}" class="h-4 w-auto m-1 opacity-100"> <p>:</p> <span id="mb-streak">0</span>
       </div>
       <div class="flex flex-row items-center m-2 h-10">
-          <!-- <div class="steak-bar-item">passes: <span id="passes-span">0</span></div> -->
           <div class="steak-bar-item">passes: <span id="passes-span">0</span> ---- lf passes = <span id="passes-span-lf">{{ passes }}</span></div>
       </div>
-  </div>
+  </div> -->
 
     <div class="flex flex-col m-4 items-center ">
       <button type="button" onclick="location.href=`{% url 'frontend:math' %}`;"
