@@ -1655,6 +1655,14 @@ body {
   --tw-gradient-to: #1d4ed8 var(--tw-gradient-to-position);
 }
 
+.hover\:to-blue-800:hover {
+  --tw-gradient-to: #1e40af var(--tw-gradient-to-position);
+}
+
+.hover\:to-blue-900:hover {
+  --tw-gradient-to: #1e3a8a var(--tw-gradient-to-position);
+}
+
 .hover\:stroke-sky-950:hover {
   stroke: #082f49;
 }
