@@ -54,5 +54,8 @@
 
 {% block app-spec-js %}
 {{ match_data|json_script:"match-data" }}
+<script>
+    const tile_facedown_src = "{% static 'frontend/images/tile-face-down-2.png' %}"
+</script>
 <script type="text/javascript" src="{% static 'frontend/js/match.js' %}"></script>
 {% endblock %}

@@ -1255,6 +1255,11 @@ video {
   --tw-gradient-to: #e2e8f0 var(--tw-gradient-to-position);
 }
 
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .p-1 {
   padding: 0.25rem;
 }

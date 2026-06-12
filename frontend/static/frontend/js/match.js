@@ -128,7 +128,28 @@ window.addEventListener('DOMContentLoaded', async (event) => {
             rowitem = document.createElement('div');
             rowitem.setAttribute('id', boxid);
             rowitem.innerHTML = i + ', ' + j
-            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-br from-cyan-600 to-blue-950 hover:bg-gradient-to-bl text-2xl font-medium');
+
+            // add image instead of gradient
+            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg overflow-hidden text-2xl font-medium');
+            rowitem.style.backgroundImage = `url('${tile_facedown_src}')`;
+            rowitem.style.backgroundSize = 'cover';
+            rowitem.style.backgroundPosition = 'center';
+
+            // 2. Add the glow when the mouse enters the tile
+            rowitem.onmouseenter = function () {
+                this.style.boxShadow = '0 0 12px rgba(34, 211, 238, 0.6)'; // Soft cyan glow
+                this.style.borderColor = '#22d3ee'; // Brighten border slightly to match
+            };
+
+            // 3. Remove the glow when the mouse leaves the tile
+            rowitem.onmouseleave = function () {
+                this.style.boxShadow = 'none';
+                this.style.borderColor = '#cffafe'; // Return to your base border color (cyan-200)
+            };
+
+            // gradient bg
+            // rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-br from-cyan-600 to-blue-950 hover:bg-gradient-to-bl text-2xl font-medium');
+
             row_div.appendChild(rowitem);
             puzzle_boxes.push(boxid);
         }
@@ -174,6 +195,9 @@ window.addEventListener('DOMContentLoaded', async (event) => {
             reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
             updateRewards();
             ev.target.innerHTML = emo.emoji;
+
+            // set bg image empty
+            ev.target.style.backgroundImage = '';
             emoji_name_span.innerHTML =  emo.id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             console.log(emo.id);
             
@@ -201,7 +225,10 @@ window.addEventListener('DOMContentLoaded', async (event) => {
                 setTimeout(function() {
                     emoji_name_span.innerHTML = '&nbsp;';
                     ev.target.innerHTML = '';
+                    ev.target.style.backgroundImage = `url('${tile_facedown_src}')`;
+                    
                     f_box.innerHTML = '';
+                    f_box.style.backgroundImage = `url('${tile_facedown_src}')`;
                     flipped_box_id = null;
                     click_disabled = 0;
                 }, 1000);
