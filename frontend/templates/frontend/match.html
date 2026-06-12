@@ -12,15 +12,12 @@
 {% block main-app %}
 <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
     <div id="match-app" class="flex flex-col items-center my-4 mx-2 font-medium bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl">
-
     </div>
 
-
     <div class="flex flex-col my-2 mx-2">
-
         <!-- emoji name div -->
-        <div class="flex items-center justify-center my-1 rounded-lg bg-indigo-100 border border-indigo-200 shadow-lg">
-            <span class="text-sm font-medium pl-2" id="emoji-name-span">
+        <div class="flex items-center justify-center my-1 rounded-full bg-indigo-100 border border-indigo-200 shadow-lg">
+            <span class="text-sm font-semibold pl-2" id="emoji-name-span">
                 &nbsp
             </span>
         </div>
@@ -35,18 +32,18 @@
               </div>
         </div>
 
-        <div class="flex items-center justify-center my-1 rounded-lg bg-indigo-100 border border-indigo-200 shadow-lg">
-            <span class="text-xs font-medium pl-2">
-                Reward: 
+        <div class="flex items-center justify-center my-1 rounded-full bg-indigo-100 border border-indigo-200 shadow-lg ">
+            <span class="text-sm font-semibold pl-2">
+                Reward &nbsp; 
             </span>
             <img id="reward_image" src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-3 mx-1">
         </div>
     </div>
 
-    <div class="flex flex-col m-4 items-center ">
-        <button type="button" onclick="location.href=`{% url 'frontend:index' %}`;"
-            class="bg-slate-300 rounded-lg text-center w-full h-10">
-          Back
+    <div class="flex flex-col m-2 mb-4 items-center ">
+        <button type="button" onclick="location.href=`{% url 'frontend:match_setup' %}`;"
+            class="bg-slate-300 rounded-full w-full h-10 text-blue-950 text-center text-xl font-bold">
+          BACK
         </button>
     </div>
 </div>
