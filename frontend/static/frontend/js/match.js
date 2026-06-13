@@ -63,12 +63,12 @@ const REWARD_COLOR_CODES = {
     },
     l2: {
         color: "bg-orange-500",
-        pb: pb_3_src,
+        pb: pb_2_src,
         threshold: 75
     },
     l3: {
         color: "bg-yellow-400",
-        pb: pb_2_src,
+        pb: pb_3_src,
         threshold: 95
     },
     l4: {
@@ -80,10 +80,7 @@ const REWARD_COLOR_CODES = {
 function updateRewards() {
     const { l1, l2, l3, l4 } = REWARD_COLOR_CODES;
 
-    if (reward_bar_width < l1.threshold) {
-        reward_pb_img.src = l1.pb;
-    }
-    else if (reward_bar_width < l2.threshold) {
+    if (reward_bar_width < l2.threshold) {
         reward_pb_img.src = l2.pb;
     }
     else if (reward_bar_width < l3.threshold) {
