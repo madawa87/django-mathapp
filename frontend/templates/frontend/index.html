@@ -5,54 +5,45 @@
 
 {% block content %}
 
-<div class="max-w-md m-2 mx-auto bg-white text-xs  rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+<div class="max-w-md m-2 mx-auto bg-gradient-to-r from-game-start to-game-mid text-xs  rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+    <div class="flex items-center justify-between w-full my-4 px-2 text-sm font-bold text-zinc-800">
     
-    <div class="flex flex-row my-2">
-        <div class="flex flex-col  mx-1 grow items-center text-s font-bold text-zinc-800">
-            <div class="flex flex-row w-full mb-1">
-                <div class="flex flex-row grow mx-1 items-center justify-start rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/coin-2.png' %}" class="w-auto h-6 m-1">
-                        <!-- <img src="{% static 'frontend/images/coin1.png' %}" class="w-auto h-4 m-1"> -->
-                    </div>
-                    <span id="coin1" class="mx-1">{{ coins }}</span> 
-                </div>
-                
-                <!-- <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <img src="{% static 'frontend/images/gc-1.png' %}" class="w-auto h-6 m-1">
-                    <span id="pk-b1" class="mx-1">{{ pb1 }}</span> 
-                </div> -->
-                <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/gc-1.png' %}" class="w-auto h-6 m-1">
-                        <!-- <img src="{% static 'frontend/images/pb4-2.png' %}" class="w-auto h-4 m-1"> -->
-                    </div>
-                    <span id="pk-b2" class="mx-1">{{ pb2 }}</span> 
-                </div>
-                <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/dc-1.png' %}" class="w-auto h-6 m-1">
-                        <!-- <img src="{% static 'frontend/images/pb4-3.png' %}" class="w-auto h-4 m-1"> -->
-                    </div>
-                    <span id="pk-b3" class="mx-1">{{ pb3 }}</span> 
-                </div>
-                <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/ec-1.png' %}" class="w-auto h-6 m-1">
-                    </div>
-                    <span id="pk-b4" class="mx-1">{{ pb4 }}</span> 
-                </div>
-            </div>
-        </div>
-        <div class="flex grow-0 items-center justify-center w-12 mx-2 text-xs font-bold">
-            {% if user.is_authenticated %}
-                <a href="{% url 'login' %}">{{ user }}</a>
-                {{ user.id|json_script:"user_id" }}
-            {% else %}
-                Login
-            {% endif %}
+    <div class="flex items-center justify-center w-[30%] pr-1">
+        <div class="flex items-center justify-start w-full rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 border border-slate-400 shadow-md p-1">
+            <img src="{% static 'frontend/images/coin-2.png' %}" class="h-6 w-auto ml-2 mr-1" alt="Coins">
+            <span id="coin1">{{ coins }}</span> 
         </div>
     </div>
+    
+    <div class="flex items-center justify-center w-[45%] rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 border border-slate-400 shadow-md px-1">
+        <div class="flex items-center justify-center w-full rounded-lg  p-1">
+            <img src="{% static 'frontend/images/gc-1.png' %}" class="h-6 w-auto mr-1" alt="Gold Token">
+            <span id="pk-b2">{{ pb2 }}</span> 
+        </div>
+
+        <div class="flex items-center justify-center w-full p-1">
+            <img src="{% static 'frontend/images/dc-1.png' %}" class="h-6 w-auto mr-1" alt="Diamond Token">
+            <span id="pk-b3">{{ pb3 }}</span> 
+        </div>
+        
+        <div class="flex items-center justify-center w-full p-1">
+            <img src="{% static 'frontend/images/ec-1.png' %}" class="h-6 w-auto mr-1" alt="Epic Token">
+            <span id="pk-b4">{{ pb4 }}</span> 
+        </div>
+    </div>
+    
+    <div class="flex items-center justify-end w-[25%] pl-1 text-base">
+        <div class="flex items-center justify-center w-full rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 border border-slate-400 shadow-md p-1 min-h-[34px]">
+        {% if user.is_authenticated %}
+            <a href="{% url 'login' %}" class="hover:underline text-blue-950 truncate max-w-[90%] mx-4">{{ user }}</a>
+            {{ user.id|json_script:"user_id" }}
+        {% else %}
+            <a href="{% url 'login' %}" class="hover:underline">Login</a>
+        {% endif %}
+    </div>
+    </div>
+
+</div>
 </div>
     
 
@@ -64,10 +55,10 @@
 
 {% block page-spec-js %}
 <script>
-    const pb_1_src = "{% static 'frontend/images/pb4-1.png' %}"
-    const pb_2_src = "{% static 'frontend/images/pb4-2.png' %}"
-    const pb_3_src = "{% static 'frontend/images/pb4-3.png' %}"
-    const pb_4_src = "{% static 'frontend/images/pb4-4.png' %}"
+    const pb_1_src = "{% static 'frontend/images/gc-1.png' %}"
+    const pb_2_src = "{% static 'frontend/images/gc-1.png' %}"
+    const pb_3_src = "{% static 'frontend/images/dc-1.png' %}"
+    const pb_4_src = "{% static 'frontend/images/ec-1.png' %}"
 </script>
 <!-- <script type="text/javascript" src="{% static 'js/math.js' %}"></script> -->
 {% endblock %}
