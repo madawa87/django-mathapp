@@ -8,52 +8,43 @@
 <div class="max-w-md m-2 mx-auto bg-white text-xs  rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
     
     <div class="flex flex-row my-2">
-        <div class="flex flex-col  mx-1 grow items-center text-s text-zinc-800">
+        <div class="flex flex-col  mx-1 grow items-center text-s font-bold text-zinc-800">
             <div class="flex flex-row w-full mb-1">
                 <div class="flex flex-row grow mx-1 items-center justify-start rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
                     <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/coin1.png' %}" class="w-auto h-4 m-1">
+                        <img src="{% static 'frontend/images/coin-2.png' %}" class="w-auto h-6 m-1">
+                        <!-- <img src="{% static 'frontend/images/coin1.png' %}" class="w-auto h-4 m-1"> -->
                     </div>
                     <span id="coin1" class="mx-1">{{ coins }}</span> 
                 </div>
-                <div class="flex flex-row grow mx-1 items-center justify-start rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <div>
-                        <img src="{% static 'frontend/images/pb4-1.png' %}" class="w-auto h-4 m-1">
-                    </div>
-                    <span id="comp1" class="mx-1">{{ pb1 }}</span> 
-                </div>
-
-            </div>
-            <div class="flex flex-row w-full">
-                <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
-                    <img src="{% static 'frontend/images/pb4-1.png' %}" class="w-auto h-4 m-1">
+                
+                <!-- <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
+                    <img src="{% static 'frontend/images/gc-1.png' %}" class="w-auto h-6 m-1">
                     <span id="pk-b1" class="mx-1">{{ pb1 }}</span> 
-                </div>
+                </div> -->
                 <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
                     <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/pb4-2.png' %}" class="w-auto h-4 m-1">
+                        <img src="{% static 'frontend/images/gc-1.png' %}" class="w-auto h-6 m-1">
+                        <!-- <img src="{% static 'frontend/images/pb4-2.png' %}" class="w-auto h-4 m-1"> -->
                     </div>
                     <span id="pk-b2" class="mx-1">{{ pb2 }}</span> 
                 </div>
                 <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
                     <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/pb4-3.png' %}" class="w-auto h-4 m-1">
+                        <img src="{% static 'frontend/images/dc-1.png' %}" class="w-auto h-6 m-1">
+                        <!-- <img src="{% static 'frontend/images/pb4-3.png' %}" class="w-auto h-4 m-1"> -->
                     </div>
                     <span id="pk-b3" class="mx-1">{{ pb3 }}</span> 
                 </div>
                 <div class="flex flex-row mx-1 grow items-center justify-center rounded-lg bg-gradient-to-tr from-cyan-200 to-slate-100 w-14 border border-slate-400 shadow-l">
                     <div class="w-6 m-1">
-                        <img src="{% static 'frontend/images/pb4-4.png' %}" class="w-auto h-4 m-1">
+                        <img src="{% static 'frontend/images/ec-1.png' %}" class="w-auto h-6 m-1">
                     </div>
                     <span id="pk-b4" class="mx-1">{{ pb4 }}</span> 
                 </div>
             </div>
-            <!-- <span class="nav-bar-pb"><span id="pk-b1">{{ pb1 }}</span> <img src="{% static 'frontend/images/pb4-1.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b2">{{ pb2 }}</span> <img src="{% static 'frontend/images/pb4-2.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b3">{{ pb3 }}</span> <img src="{% static 'frontend/images/pb4-3.png' %}" class="pbimgs"></span>
-            <span class="nav-bar-pb"><span id="pk-b4">{{ pb4 }}</span> <img src="{% static 'frontend/images/pb4-4.png' %}" class="pbimgs"></span> -->
         </div>
-        <div class="flex grow-0 items-center justify-center w-12 mx-2 text-xs">
+        <div class="flex grow-0 items-center justify-center w-12 mx-2 text-xs font-bold">
             {% if user.is_authenticated %}
                 <a href="{% url 'login' %}">{{ user }}</a>
                 {{ user.id|json_script:"user_id" }}

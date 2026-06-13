@@ -843,6 +843,14 @@ video {
   height: 100%;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-7 {
+  height: 1.75rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -889,6 +897,10 @@ video {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-7 {
+  width: 1.75rem;
 }
 
 .max-w-md {
@@ -993,6 +1005,10 @@ video {
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.text-pretty {
+  text-wrap: pretty;
 }
 
 .break-all {
