@@ -109,7 +109,7 @@
             <span class="text-xs font-medium pl-2">
                 Reward: 
             </span>
-            <img id="reward_image" src="{% static 'frontend/images/coin1.png' %}" class="w-auto h-3 mx-1">
+            <img id="reward_image" src="{% static 'frontend/images/coin-2.png' %}" class="w-auto h-3 mx-1">
             <span id="reward_coins" class="text-xs font-medium pr-2">
               x 4 
           </span>
@@ -117,7 +117,8 @@
     </div>
 
     <!-- components div -->
-    <!-- <div class="flex flex-col m-4 py-2 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
+     <!-- HIDDEN -->
+    <div class="flex flex-col m-4 py-2 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 hidden">
       <div class="flex flex-row w-full items-start justify-start m-2 my-1 h-8">
           <div class="flex flex-row w-28 items-center my-1 mx-2 text-xs">
               Component
@@ -147,10 +148,11 @@
           </div>
         </div>
     </div> 
-  </div> -->
+  </div>
 
-    <!-- Strean div -->
-    <!-- <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800">
+  <!-- Strean div -->
+     <!-- HIDDEN -->
+    <div class="flex flex-col m-4 items-center mx-4 bg-gradient-to-r from-sky-100 via-cyan-100 to-sky-100 rounded-xl text-s text-zinc-800 hidden">
 
       <div class="flex flex-row items-center m-2 h-10">
           <p>streak: &nbsp;</p> 
@@ -161,7 +163,7 @@
       <div class="flex flex-row items-center m-2 h-10">
           <div class="steak-bar-item">passes: <span id="passes-span">0</span> ---- lf passes = <span id="passes-span-lf">{{ passes }}</span></div>
       </div>
-  </div> -->
+  </div>
 
     <div class="flex flex-col m-4 items-center ">
       <button type="button" onclick="location.href=`{% url 'frontend:math' %}`;"

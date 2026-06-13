@@ -174,12 +174,12 @@ function updateInventory(inc_bool, pass_inc) {
         return res.json();
     }).then((data) => {
         if (data['updated']) {
-            document.getElementById("pk-b1").innerText = data['pb1'];
+            // document.getElementById("pk-b1").innerText = data['pb1'];
             document.getElementById("pk-b2").innerText = data['pb2'];
             document.getElementById("pk-b3").innerText = data['pb3'];
             document.getElementById("pk-b4").innerText = data['pb4'];
             document.getElementById("coin1").innerText = data['coin'];
-            document.getElementById("comp1").innerText = data['comp'];
+            // document.getElementById("comp1").innerText = data['comp'];
             document.getElementById("passes-span-lf").innerText = data['lt_passes'];
         }
     });

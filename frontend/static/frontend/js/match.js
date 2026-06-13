@@ -36,7 +36,11 @@ const match_data = JSON.parse(
 var n_row = match_data.n_row;
 var n_col = match_data.n_col;
 if (n_row > 11) {n_row = 10};
-if (n_col > 7) {n_col = 6};
+if (n_row < 2) {n_row = 2};
+if (n_col > 5) {n_col = 5};
+if (n_col < 2) {n_col = 2};
+
+if (n_col*n_row % 2 == 1) {n_col = 4; n_row=4};
 
 console.log("shape:", n_row, n_col)
 
@@ -128,7 +132,31 @@ window.addEventListener('DOMContentLoaded', async (event) => {
             rowitem = document.createElement('div');
             rowitem.setAttribute('id', boxid);
             rowitem.innerHTML = i + ', ' + j
-            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-br from-cyan-600 to-blue-950 hover:bg-gradient-to-bl text-2xl font-medium');
+
+            // add image instead of gradient
+            rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg overflow-hidden text-2xl font-medium');
+            // By using a combination of hover:border-cyan-400 and an inner shadow, 
+            // // you get the exact visual effect of a thicker border without changing layout sizes!
+            // rowitem.setAttribute('class', 'flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg overflow-hidden text-2xl font-medium shadow-sm transition-all duration-150 hover:border-cyan-400 hover:shadow-[0_0_12px_rgba(34,211,238,0.6),_inset_0_0_0_2px_#22d3ee] cursor-pointer');
+            rowitem.style.backgroundImage = `url('${tile_facedown_src}')`;
+            rowitem.style.backgroundSize = 'cover';
+            rowitem.style.backgroundPosition = 'center';
+
+            // 2. Add the glow when the mouse enters the tile
+            rowitem.onmouseenter = function () {
+                this.style.boxShadow = '0 0 24px rgba(34, 211, 238, 0.6)'; // Soft cyan glow
+                this.style.borderColor = '#22d3ee'; // Brighten border slightly to match
+            };
+
+            // 3. Remove the glow when the mouse leaves the tile
+            rowitem.onmouseleave = function () {
+                this.style.boxShadow = 'none';
+                this.style.borderColor = '#cffafe'; // Return to your base border color (cyan-200)
+            };
+
+            // gradient bg
+            // rowitem.setAttribute('class','flex items-center justify-center h-12 w-12 m-2 border-2 border-cyan-200 rounded-lg bg-gradient-to-br from-cyan-600 to-blue-950 hover:bg-gradient-to-bl text-2xl font-medium');
+
             row_div.appendChild(rowitem);
             puzzle_boxes.push(boxid);
         }
@@ -174,6 +202,9 @@ window.addEventListener('DOMContentLoaded', async (event) => {
             reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
             updateRewards();
             ev.target.innerHTML = emo.emoji;
+
+            // set bg image empty
+            ev.target.style.backgroundImage = '';
             emoji_name_span.innerHTML =  emo.id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             console.log(emo.id);
             
@@ -201,7 +232,10 @@ window.addEventListener('DOMContentLoaded', async (event) => {
                 setTimeout(function() {
                     emoji_name_span.innerHTML = '&nbsp;';
                     ev.target.innerHTML = '';
+                    ev.target.style.backgroundImage = `url('${tile_facedown_src}')`;
+                    
                     f_box.innerHTML = '';
+                    f_box.style.backgroundImage = `url('${tile_facedown_src}')`;
                     flipped_box_id = null;
                     click_disabled = 0;
                 }, 1000);
