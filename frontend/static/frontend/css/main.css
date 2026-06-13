@@ -1898,7 +1898,20 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:h-6 {
+    height: 1.5rem;
+  }
+
+  .md\:min-h-\[34px\] {
+    min-height: 34px;
+  }
+
   .md\:max-w-2xl {
     max-width: 42rem;
+  }
+
+  .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
