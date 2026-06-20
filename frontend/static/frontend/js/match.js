@@ -46,6 +46,7 @@ console.log("shape:", n_row, n_col)
 
 const n_boxes = n_row*n_col;
 const n_numbers = 0.5*n_boxes;
+let n_unmatched = n_numbers;
 let reward_bar_width = 100;
 const click_pen = (100-50)/n_boxes;
 var puzzle_numbers = [];
@@ -56,29 +57,25 @@ var flipped_box_id = null;
 var click_disabled = 0;
 
 const REWARD_COLOR_CODES = {
-    l1: {
-        color: "bg-red-500",
-        threshold: 50,
-        pb: pb_1_src
-    },
     l2: {
         color: "bg-orange-500",
         pb: pb_2_src,
-        threshold: 75
+        threshold: l2_threshold,
     },
     l3: {
         color: "bg-yellow-400",
         pb: pb_3_src,
-        threshold: 95
+        threshold: l3_threshold,
     },
     l4: {
         color: "bg-green-500",
-        pb: pb_4_src
+        pb: pb_4_src,
+        threshold: l4_threshold,
     }
 };
 
-function updateRewards() {
-    const { l1, l2, l3, l4 } = REWARD_COLOR_CODES;
+function updateRewardsDisplay() {
+    const { l2, l3, l4 } = REWARD_COLOR_CODES;
 
     if (reward_bar_width < l2.threshold) {
         reward_pb_img.src = l2.pb;
@@ -88,7 +85,6 @@ function updateRewards() {
     }
     else {
         reward_pb_img.src = l4.pb;
-
     }
 }
 
@@ -197,7 +193,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
                 reward_bar_width = 1;
             }
             reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
-            updateRewards();
+            updateRewardsDisplay();
             ev.target.innerHTML = emo.emoji;
 
             // set bg image empty
@@ -216,7 +212,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
                 // alert("hooray!!");
                 reward_bar_width += 3 * click_pen;
                 reward_div.setAttribute("style", `width: ${reward_bar_width}%`);
-                updateRewards();
+                updateRewardsDisplay();
                 
                 flipped_box_id = null;
                 dis_div_classes = 'flex items-center justify-center h-12 w-12 m-2 border-1 border-1 border-slate-600 rounded-lg bg-gradient-to-r from-zinc-200 via-slate-300 to-slate-200 opacity-60 text-xl font-medium';
@@ -224,6 +220,11 @@ window.addEventListener('DOMContentLoaded', async (event) => {
                 ev.target.setAttribute('class',dis_div_classes);
                 f_box.parentElement.replaceChild(f_box.cloneNode(true), f_box);
                 ev.target.parentElement.replaceChild(ev.target.cloneNode(true), ev.target);
+                n_unmatched -=1;
+                console.log("n_unmatched00 = " + n_unmatched);
+                if (n_unmatched == 0) {
+                    console.log("Game over!!");
+                }
             } else {
                 click_disabled = 1;
                 setTimeout(function() {

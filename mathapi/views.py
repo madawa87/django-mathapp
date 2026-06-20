@@ -322,8 +322,19 @@ def updateInventory(request, pk):
     request_data = request.data
 
     response = {"updated": True}
+    reward_obj = None
 
-    reward_obj = MathReward()
+    # if request_data request_data['timeLeft'] is not none, reward_obj is a MathReward
+
+    print(f"request_data['timeLeft'] ::::::::: {request_data['timeLeft']}")
+    if request_data['timeLeft'] >= 0 and request_data['timeLeft'] <21:
+        reward_obj = MathReward()
+
+    else:
+        print(f"No reward obj pick to pick ::::::::: {request_data['timeLeft']}")
+        return
+
+
 
     if inventory_obj and lt_inventory_obj:
         if request_data["inc"]:

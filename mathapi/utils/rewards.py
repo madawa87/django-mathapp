@@ -27,7 +27,37 @@ class MathReward:
         elif time_left >= self.reward_threshold['t2']:
             rew['t2'] = 1
             rew['t'] = 2
-        elif time_left > self.reward_threshold['t1']:
-            rew['t1'] = 1
-            rew['t'] = 1
+        # elif time_left > self.reward_threshold['t1']:
+        #     rew['t1'] = 1
+        #     rew['t'] = 1
+        return rew
+    
+    
+class MatchReward:
+    """
+    Match reward tiers are defined in this class
+    """
+    def __init__(self) -> None:
+        # 20s to answer
+        self.full_percent = 100
+        self.reward_threshold = {
+            't1' : 0,
+            't2' : 35,
+            't3' : 60,
+            't4' : 85,
+        }
+
+
+    def get_reward_tier(self, reward_bar_width):
+        rew = {'t1' : 0, 't2' : 0, 't3' : 0, 't4' : 0, 't' : 0}
+
+        if reward_bar_width >= self.reward_threshold['t4']:
+            rew['t4'] = 1
+            rew['t'] = 4
+        elif reward_bar_width >= self.reward_threshold['t3']:
+            rew['t3'] = 1
+            rew['t'] = 3
+        elif reward_bar_width >= self.reward_threshold['t2']:
+            rew['t2'] = 1
+            rew['t'] = 2
         return rew

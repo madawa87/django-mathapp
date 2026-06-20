@@ -2,7 +2,7 @@ from multiprocessing import context
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from mathapi.models import Coins, Pokeballs, LifetimePokeballs, Inventory, LifetimeInventory
-from mathapi.utils.rewards import MathReward
+from mathapi.utils.rewards import MathReward, MatchReward
 
 
 def get_common_context(user):
@@ -113,11 +113,16 @@ def shop_setup_view(request):
 @login_required
 def match_view(request):
     context = get_common_context(request.user)
+    # match reward tier thresholds
+    rew_obj = MatchReward()
     context["match_data"] = {
         "n_row" : request.GET.get('n_row'),
         "n_col" : request.GET.get('n_col')
     }
-    print ("match_view context: {}".format(context))
+    context["l4_threshold"] = rew_obj.reward_threshold['t4']
+    context["l3_threshold"] = rew_obj.reward_threshold['t3']
+    context["l2_threshold"] = rew_obj.reward_threshold['t2']
+    print ("+++++++++++++++++++match_view context: {}".format(context))
     return render(request, 'frontend/match.html', context)
 
 @login_required
