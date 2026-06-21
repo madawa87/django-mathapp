@@ -26,13 +26,14 @@ const reward_div = document.getElementById('reward-meter-div');
 const emoji_name_span = document.getElementById('emoji-name-span');
 const reward_pb_img = document.getElementById('reward_image');
 
-// const n_row = 8;
-// const n_col = 5;
-// const n_row = 6;
-// const n_col = 5;
+// collect data from server
 const match_data = JSON.parse(
     document.getElementById("match-data").textContent
 );
+const thresholds = JSON.parse(
+    document.getElementById("threshold-data").textContent
+);
+
 var n_row = match_data.n_row;
 var n_col = match_data.n_col;
 if (n_row > 11) {n_row = 10};
@@ -60,17 +61,17 @@ const REWARD_COLOR_CODES = {
     l2: {
         color: "bg-orange-500",
         pb: pb_2_src,
-        threshold: l2_threshold,
+        threshold: thresholds.l2_threshold,
     },
     l3: {
         color: "bg-yellow-400",
         pb: pb_3_src,
-        threshold: l3_threshold,
+        threshold: thresholds.l3_threshold,
     },
     l4: {
         color: "bg-green-500",
         pb: pb_4_src,
-        threshold: l4_threshold,
+        threshold: thresholds.l4_threshold,
     }
 };
 

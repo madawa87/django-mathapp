@@ -51,12 +51,9 @@
 
 {% block app-spec-js %}
 {{ match_data|json_script:"match-data" }}
+{{ thresholds|json_script:"threshold-data" }}
 <script>
     const tile_facedown_src = "{% static 'frontend/images/tile-face-down-2.png' %}";
-    const l2_threshold = {{ l2_threshold }};
-    const l3_threshold = {{ l3_threshold }};
-    const l4_threshold = {{ l4_threshold }};
-
 </script>
 <script type="text/javascript" src="{% static 'frontend/js/match.js' %}"></script>
 {% endblock %}

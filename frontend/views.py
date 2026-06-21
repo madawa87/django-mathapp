@@ -119,9 +119,11 @@ def match_view(request):
         "n_row" : request.GET.get('n_row'),
         "n_col" : request.GET.get('n_col')
     }
-    context["l4_threshold"] = rew_obj.reward_threshold['t4']
-    context["l3_threshold"] = rew_obj.reward_threshold['t3']
-    context["l2_threshold"] = rew_obj.reward_threshold['t2']
+    context["thresholds"] = {
+        "l4_threshold" : rew_obj.reward_threshold['t4'],
+        "l3_threshold" : rew_obj.reward_threshold['t3'],
+        "l2_threshold" : rew_obj.reward_threshold['t2']
+    }
     print ("+++++++++++++++++++match_view context: {}".format(context))
     return render(request, 'frontend/match.html', context)
 
